@@ -1,0 +1,16 @@
+{
+    "name": "SwapChains.PersistenceData",
+    "rootNamespace": "SwapChains.Runtime.PersistenceData",
+    "references": [
+        "GUID:33759803a11f4d538227861a78aba30b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,33 @@
+{
+    "name": "SwapChains.Entities",
+    "rootNamespace": "SwapChains.Runtime.Entities",
+    "references": [
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:8c4dd21966739024fbd72155091d199e",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:962f75d2a66ca3741815080a77b41adb",
+        "GUID:33759803a11f4d538227861a78aba30b",
+        "GUID:6babb795e89a7924c94d6f8d518a6dec",
+        "GUID:975d84803e7f8a24b9491605860c064b",
+        "GUID:93f14dc473df07a4d8f3e40635853ece",
+        "GUID:48355a528464e7e4195b01fd755c401e",
+        "GUID:cf52e1dfe51e4fa469bc33e8fe44b1a3",
+        "GUID:91b8455ad76bff94eb35ecfd22d1ac16",
+        "GUID:c4617054306682649869d728f01f584a",
+        "GUID:2f5a0378f6ddc3845b4d2b10d6b82910",
+        "GUID:77221876cc6b8244180b96e320b1bcd4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

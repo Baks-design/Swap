@@ -1,0 +1,16 @@
+{
+    "name": "SwapChains.VFX",
+    "rootNamespace": "",
+    "references": [
+        "GUID:91b8455ad76bff94eb35ecfd22d1ac16"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
