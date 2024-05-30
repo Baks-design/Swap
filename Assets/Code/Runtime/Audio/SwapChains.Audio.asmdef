@@ -1,0 +1,20 @@
+{
+    "name": "SwapChains.Runtime.Audio",
+    "rootNamespace": "SwapChains.Runtime.Audio",
+    "references": [
+        "GUID:a5e7283d5f4ca7543ad8df133498b48b",
+        "GUID:33759803a11f4d538227861a78aba30b",
+        "GUID:e5ab6ca654c21c14188bfb1f84f9c5a4",
+        "GUID:cf52e1dfe51e4fa469bc33e8fe44b1a3",
+        "GUID:48355a528464e7e4195b01fd755c401e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

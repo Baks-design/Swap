@@ -1,9 +1,10 @@
 using R3;
 using R3.Triggers;
+using SwapChains.Runtime.Utilities.Helpers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace SwapChains.Runtime.Entities
+namespace SwapChains.Runtime.Entities.Player
 {
     public class PlayerInput : MonoBehaviour
     {

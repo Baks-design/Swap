@@ -1,19 +1,19 @@
 using System;
 using KBCore.Refs;
+using SwapChains.Runtime.Entities.Damages;
+using SwapChains.Runtime.Entities.Weapons;
+using SwapChains.Runtime.Utilities.Helpers;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Rendering;
-using XIV.DesignPatterns.Common.HealthSystem;
-using XIV.DesignPatterns.Observer.Example01;
 
-namespace SwapChains.Runtime.Entities
+namespace SwapChains.Runtime.Entities.Player
 {
-    public class PlayerController : ValidatedMonoBehaviour, IDamageable
+    public class PlayerController : MonoBehaviour, IDamageable
     {
-        [SerializeField, Self] Health health;
-        [SerializeField, Child] Gun gun;
-        [SerializeField, Self] NavMeshAgent agent;
+        [Header("Refs")]
+        [SerializeField] Health health;
+        [SerializeField, Child] Weapon weapon;
         [SerializeField, Child] CinemachineCamera cinemachine;
         [SerializeField, Child] SkinnedMeshRenderer[] meshRenderers;
         [NonSerialized] public float DeltaTime = 0f;
@@ -24,6 +24,8 @@ namespace SwapChains.Runtime.Entities
         [NonSerialized] public Transform Transform;
 
         public bool IsNpcActive { get; private set; } = false;
+
+        void OnValidate() => this.ValidateRefs();
 
         void Awake()
         {
@@ -47,7 +49,6 @@ namespace SwapChains.Runtime.Entities
             if (isActive)
             {
                 IsNpcActive = true;
-                agent.enabled = false;
                 cinemachine.gameObject.SetActive(true);
                 for (var i = 0; i < meshRenderers.Length; i++)
                     meshRenderers[i].shadowCastingMode = ShadowCastingMode.ShadowsOnly;
@@ -55,14 +56,13 @@ namespace SwapChains.Runtime.Entities
             else
             {
                 IsNpcActive = false;
-                agent.enabled = true;
                 cinemachine.gameObject.SetActive(false);
                 for (var i = 0; i < meshRenderers.Length; i++)
                     meshRenderers[i].shadowCastingMode = ShadowCastingMode.On;
             }
         }
 
-        bool IDamageable.CanReceiveDamage() => health.isDepleted is false;
+        bool IDamageable.CanReceiveDamage() => health.IsDepleted is false;
 
         void IDamageable.ReceiveDamage(float amount) => health.DecreaseCurrentHealth(amount);
 

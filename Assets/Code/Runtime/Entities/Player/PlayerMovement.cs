@@ -3,9 +3,9 @@ using KBCore.Refs;
 using R3;
 using UnityEngine;
 
-namespace SwapChains.Runtime.Entities
+namespace SwapChains.Runtime.Entities.Player
 {
-    public class PlayerMovement : PlayerSignals
+    public class PlayerMovement : MonoBehaviour, IPlayerSignals
     {
         [Header("Settings")]
         [SerializeField, Range(1f, 10f)] float walkSpeed = 5f;
@@ -22,11 +22,13 @@ namespace SwapChains.Runtime.Entities
         Subject<Unit> jumped;
         Subject<Unit> stepped;
 
-        public override float StrideLength => strideLength;
-        public override Observable<Vector3> Walked => walked;
-        public override Observable<Unit> Landed => landed;
-        public override Observable<Unit> Jumped => jumped;
-        public override Observable<Unit> Stepped => stepped;
+        public float StrideLength => strideLength;
+        public Observable<Vector3> Walked => walked;
+        public Observable<Unit> Landed => landed;
+        public Observable<Unit> Jumped => jumped;
+        public Observable<Unit> Stepped => stepped;
+
+        void OnValidate() => this.ValidateRefs();
 
         void Awake()
         {

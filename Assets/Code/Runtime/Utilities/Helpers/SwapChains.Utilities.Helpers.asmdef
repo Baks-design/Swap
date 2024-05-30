@@ -2,7 +2,8 @@
     "name": "SwapChains.Utilities.Helpers",
     "rootNamespace": "SwapChains.Runtime.Utilities.Helpers",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:a5e7283d5f4ca7543ad8df133498b48b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

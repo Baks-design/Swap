@@ -1,8 +1,14 @@
 {
     "name": "SwapChains.VFX",
-    "rootNamespace": "",
+    "rootNamespace": "SwapChains.Runtime.VFX",
     "references": [
-        "GUID:91b8455ad76bff94eb35ecfd22d1ac16"
+        "GUID:91b8455ad76bff94eb35ecfd22d1ac16",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:a5e7283d5f4ca7543ad8df133498b48b",
+        "GUID:c4617054306682649869d728f01f584a",
+        "GUID:48355a528464e7e4195b01fd755c401e",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:cf52e1dfe51e4fa469bc33e8fe44b1a3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -5,11 +5,12 @@ using R3;
 using SwapChains.Runtime.UserInterface;
 using SwapChains.Runtime.Utilities.Helpers;
 using SwapChains.Runtime.Utilities.ServicesLocator;
+using SwapChains.Runtime.VFX;
 using UnityEngine;
 
-namespace SwapChains.Runtime.Entities
+namespace SwapChains.Runtime.Entities.Player
 {
-    public class PlayerSwap : ValidatedMonoBehaviour
+    public class PlayerSwap : MonoBehaviour
     {
         [Header("Swap Settings")]
         [SerializeField] LayerMask swapLayer;
@@ -30,6 +31,8 @@ namespace SwapChains.Runtime.Entities
         readonly WaitForEndOfFrame endOfFrame;
         readonly WaitForSeconds timeForEndTransition = new(1f);
         readonly RaycastHit[] hits = new RaycastHit[1];
+
+        void OnValidate() => this.ValidateRefs();
 
         void Start()
         {

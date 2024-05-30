@@ -1,0 +1,16 @@
+{
+    "name": "SwapChains.Runtime.Damages",
+    "rootNamespace": "SwapChains.Runtime.Damages",
+    "references": [
+        "GUID:cf52e1dfe51e4fa469bc33e8fe44b1a3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

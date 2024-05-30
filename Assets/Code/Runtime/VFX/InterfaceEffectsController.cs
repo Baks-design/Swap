@@ -1,7 +1,7 @@
 using SwapChains.Runtime.Utilities.ServicesLocator;
 using UnityEngine;
 
-namespace SwapChains.Runtime.UserInterface
+namespace SwapChains.Runtime.VFX
 {
     public class InterfaceEffectsController : MonoBehaviour
     {

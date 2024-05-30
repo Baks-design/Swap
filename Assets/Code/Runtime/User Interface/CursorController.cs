@@ -1,6 +1,5 @@
 using SwapChains.Runtime.Utilities.Helpers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace SwapChains.Runtime.UserInterface

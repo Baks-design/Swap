@@ -4,9 +4,9 @@ using R3;
 using Unity.Cinemachine;
 using UnityEngine;
 
-namespace SwapChains.Runtime.Entities
+namespace SwapChains.Runtime.Entities.Player
 {
-    public class PlayerCamera : ValidatedMonoBehaviour
+    public class PlayerCamera : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField, Range(-90f, 0f)] float minViewAngle = -60f;
@@ -33,6 +33,8 @@ namespace SwapChains.Runtime.Entities
         [SerializeField, Anywhere] Transform player;
         [SerializeField, Child] CinemachineCamera virtualCamera;
 
+        void OnValidate() => this.ValidateRefs();
+
         void Awake() => initialPosition = virtualCamera.transform.localPosition;
 
         void Start()
@@ -46,12 +48,15 @@ namespace SwapChains.Runtime.Entities
         {
             input.Mouselook.Where(v => v != Vector2.zero).Subscribe(inputLook =>
             {
+                //horizontal
                 var horzLook = inputLook.x * controller.DeltaTime * Vector3.up;
                 player.localRotation *= Quaternion.Euler(horzLook);
 
+                //vertical
                 var vertLook = inputLook.y * controller.DeltaTime * Vector3.left;
                 var newQ = virtualCamera.transform.localRotation * Quaternion.Euler(vertLook);
 
+                //Apply
                 virtualCamera.transform.localRotation = ClampRotationAroundXAxis(newQ, -maxViewAngle, -minViewAngle);
             }).AddTo(this);
         }
