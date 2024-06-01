@@ -16,7 +16,6 @@ namespace SwapChains.Runtime.Audio
         [SerializeField, Range(0.1f, 1f)] float groundCheckRadius = 0.1f;
         [Header("Refs")]
         [SerializeField, Parent] PlayerController controller;
-        [SerializeField, Anywhere] PlayerMovement movement;
         [SerializeField, Anywhere] AudioSource footStepsSource;
         [SerializeField] AudioSource audioSource;
         [SerializeField] AudioClip[] hurtAudioClips;
@@ -48,33 +47,31 @@ namespace SwapChains.Runtime.Audio
 
         void FootstepsHandle()
         {
-            //movement.Stepped.Subscribe(clips =>
-            //{
-                var count = Physics.OverlapSphereNonAlloc(controller.Transform.localPosition, groundCheckRadius, m_CollidersBuffer, ~(1 << 30));
-                for (var i = 0; i < count; ++i)
+
+            var count = Physics.OverlapSphereNonAlloc(controller.Transform.localPosition, groundCheckRadius, m_CollidersBuffer, ~(1 << 30));
+            for (var i = 0; i < count; ++i)
+            {
+                var renderer = m_CollidersBuffer[i].gameObject.GetComponentInChildren<Renderer>();
+                if (renderer)
                 {
-                    var renderer = m_CollidersBuffer[i].gameObject.GetComponentInChildren<Renderer>();
-                    if (renderer)
+                    for (var j = 0; j < renderer.sharedMaterials.Length; j++)
                     {
-                        for (var j = 0; j < renderer.sharedMaterials.Length; j++)
+                        for (var k = 0; k < MaterialMatchList.Length; k++)
                         {
-                            for (var k = 0; k < MaterialMatchList.Length; k++)
+                            if (MaterialMatchList[i].Materials.Contains(renderer.sharedMaterials[i]))
                             {
-                                if (MaterialMatchList[i].Materials.Contains(renderer.sharedMaterials[i]))
+                                if (footStepsSource.resource != MaterialMatchList[i].RandomContainer)
                                 {
-                                    if (footStepsSource.resource != MaterialMatchList[i].RandomContainer)
-                                    {
-                                        footStepsSource.Stop();
-                                        footStepsSource.resource = MaterialMatchList[i].RandomContainer;
-                                        footStepsSource.Play();
-                                    }
-                                    return;
+                                    footStepsSource.Stop();
+                                    footStepsSource.resource = MaterialMatchList[i].RandomContainer;
+                                    footStepsSource.Play();
                                 }
+                                return;
                             }
                         }
                     }
                 }
-           // }).AddTo(this);
+            }
         }
 
         #region Health

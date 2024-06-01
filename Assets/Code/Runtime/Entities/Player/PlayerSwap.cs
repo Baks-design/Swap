@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using KBCore.Refs;
-using R3;
-using SwapChains.Runtime.UserInterface;
 using SwapChains.Runtime.Utilities.Helpers;
 using SwapChains.Runtime.Utilities.ServicesLocator;
 using SwapChains.Runtime.VFX;
@@ -22,7 +20,6 @@ namespace SwapChains.Runtime.Entities.Player
         [SerializeField, Range(1f, 50f)] float revealDistance = 20f;
         [Header("Refs")]
         [SerializeField, Self] PlayerController controller;
-        [SerializeField, Self] PlayerInput input;
         float nextFire = 0f;
         (bool, RaycastHit) raycast = (false, new());
         Coroutine revealEffectCoroutine;
@@ -42,18 +39,15 @@ namespace SwapChains.Runtime.Entities.Player
 
         void SwapHandle()
         {
-            input.SwitchBody.Subscribe(_ =>
+            if (controller.GameTime > nextFire)
             {
-                if (controller.GameTime > nextFire)
-                {
-                    nextFire = controller.GameTime + swapfireRate;
+                nextFire = controller.GameTime + swapfireRate;
 
-                    (raycast.Item1, raycast.Item2) = GameHelper.CheckInteraction(
-                        controller.Camera, hits, swapRange, swapLayer, QueryTriggerInteraction.Ignore);
-                    if (raycast.Item1)
-                        swapRoutine ??= StartCoroutine(SwapRoutine(raycast.Item2));
-                }
-            }).AddTo(this);
+                (raycast.Item1, raycast.Item2) = GameHelper.CheckInteraction(
+                    controller.Camera, hits, swapRange, swapLayer, QueryTriggerInteraction.Ignore);
+                if (raycast.Item1)
+                    swapRoutine ??= StartCoroutine(SwapRoutine(raycast.Item2));
+            }
         }
 
         IEnumerator SwapRoutine(RaycastHit hitPoint)
@@ -74,14 +68,11 @@ namespace SwapChains.Runtime.Entities.Player
 
         void RevealEnemyHandle()
         {
-            input.ShowBody.Subscribe(_ =>
+            if (controller.GameTime > nextFire)
             {
-                if (controller.GameTime > nextFire)
-                {
-                    nextFire = controller.GameTime + revealfireRate;
-                    revealEffectCoroutine ??= StartCoroutine(RevealEnemyRoutine());
-                }
-            }).AddTo(this);
+                nextFire = controller.GameTime + revealfireRate;
+                revealEffectCoroutine ??= StartCoroutine(RevealEnemyRoutine());
+            }
         }
 
         IEnumerator RevealEnemyRoutine()

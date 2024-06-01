@@ -152,9 +152,9 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 100
-  field of view: 40
-  orthographic: 1
+  far clip plane: 500
+  field of view: 60
+  orthographic: 0
   orthographic size: 10
   m_Depth: 0
   m_CullingMask:
@@ -211,4 +211,4 @@ Skybox:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5576997564805914969}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_CustomSkybox: {fileID: 2100000, guid: 9ee3bc639345127459bbca04c634c1a2, type: 2}

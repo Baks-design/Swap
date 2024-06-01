@@ -119,7 +119,7 @@ MonoBehaviour:
       type: {class: URPDefaultVolumeProfileSettings, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_VolumeProfile: {fileID: 11400000, guid: 5ae45020384e5bb469ffd90cc42e5b05, type: 2}
+        m_VolumeProfile: {fileID: 11400000, guid: 89b5ae3c6bbd76d41ad0aff12828acf8, type: 2}
     - rid: 2245366835014795487
       type: {class: URPShaderStrippingSetting, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
@@ -140,7 +140,7 @@ MonoBehaviour:
       type: {class: RenderGraphSettings, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_EnableRenderCompatibilityMode: 0
+        m_EnableRenderCompatibilityMode: 1
     - rid: 2245366835014795490
       type: {class: UniversalRenderPipelineEditorShaders, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
