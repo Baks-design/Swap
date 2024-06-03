@@ -19,7 +19,7 @@
                     "type": "Value",
                     "id": "48158bc5-b8f4-4e9a-87aa-9b8818536685",
                     "expectedControlType": "Vector2",
-                    "processors": "ScaleVector2(x=0.05,y=0.05)",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -93,7 +93,7 @@
                     "id": "185970ee-8dc0-451f-9617-086eaa35d584",
                     "path": "<Pointer>/delta",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false,invertY=false),ScaleVector2(x=2,y=2)",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
                     "groups": ";Keyboard&Mouse",
                     "action": "Look",
                     "isComposite": false,

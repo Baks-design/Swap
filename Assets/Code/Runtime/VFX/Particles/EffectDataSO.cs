@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
-using SwapChains.Runtime.Utilities.Helpers;
+using SwapChains.Runtime.Utilities.Timers;
 using SwapChains.Runtime.Utilities.VFX;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -44,7 +44,7 @@ namespace SwapChains.Runtime.VFX
                 material = material,
                 animatableProperties = arr,
                 feature = GetFeature(scriptableRendererData),
-                timer = new Timer(duration),
+                timer = new CountdownTimer(duration),
             };
         }
 

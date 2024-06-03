@@ -17,13 +17,13 @@ namespace SwapChains.Runtime.VFX
 
         void Update()
         {
-            if (timer.Update(Time.deltaTime)) enabled = false;
-            cam.Lens.FieldOfView = Mathf.Lerp(initialFOV, targetFOV, timer.NormalizedTimePingPong);
+            if (timer.IsRunning) enabled = false;
+            cam.Lens.FieldOfView = Mathf.Lerp(initialFOV, targetFOV, timer.Progress);
         }
 
         public override void StartTween()
         {
-            if (timer.IsDone() is false)
+            if (timer.IsRunning)
                 cam.Lens.FieldOfView = initialFOV;
 
             timer.Reset();

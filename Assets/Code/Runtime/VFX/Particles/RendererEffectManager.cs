@@ -24,10 +24,10 @@ namespace SwapChains.Runtime.VFX
             for (var i = count - 1; i >= 0; i--)
             {
                 var effectData = activeEffectDatas[i];
-                effectData.timer.Update(Time.deltaTime);
+                effectData.timer.Tick();
                 AnimateMaterial(effectData);
 
-                if (effectData.timer.IsDone())
+                if (effectData.timer.IsFinished)
                 {
                     DeactivateIfPossible(effectData, i);
                     activeEffectDatas.RemoveAt(i);
@@ -71,7 +71,7 @@ namespace SwapChains.Runtime.VFX
             var effectData = activeEffectDatas[index];
             if (complete)
             {
-                effectData.timer.Update(float.MaxValue);
+                effectData.timer.Stop();
                 AnimateMaterial(effectData);
             }
             // We consider that the effect has been completed because we are done with it
@@ -105,7 +105,7 @@ namespace SwapChains.Runtime.VFX
             var animatableProperties = effectData.animatableProperties;
             var length = animatableProperties.Length;
             for (var i = 0; i < length; i++)
-                animatableProperties[i].Animate(material, effectData.timer.NormalizedTime);
+                animatableProperties[i].Animate(material, effectData.timer.Progress);
         }
 
         UniversalRenderPipelineAsset GetPipelineAsset() 

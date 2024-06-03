@@ -65,8 +65,7 @@ namespace SwapChains.Runtime.Utilities.Timers
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
-                return;
+            if (disposed) return;
 
             if (disposing)
                 TimerManager.DeregisterTimer(this);

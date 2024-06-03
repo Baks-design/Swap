@@ -1,14 +1,14 @@
-using SwapChains.Runtime.Utilities.Helpers;
+using SwapChains.Runtime.Utilities.Timers;
 using UnityEngine;
 
 namespace SwapChains.Runtime.VFX
 {
     public abstract class CameraEffectTween : MonoBehaviour
     {
-        [SerializeField] protected Timer timer = new(0.5f);
+        [SerializeField] protected CountdownTimer timer = new(0.5f);
 
         public abstract void StartTween();
 
-        public virtual void StopTween() => timer.Update(float.MaxValue);
+        public virtual void StopTween() => timer.Tick();
     }
 }

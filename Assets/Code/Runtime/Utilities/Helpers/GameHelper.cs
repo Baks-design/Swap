@@ -92,6 +92,20 @@ namespace SwapChains.Runtime.Utilities.Helpers
 
             return (isColliding, hit);
         }
+
+        /// <param name="angle"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        public static float ClampAngle(float angle, float from, float to)
+        {
+            if (angle < 0f)
+                angle = 360f + angle;
+
+            if (angle > 180f)
+                return Mathf.Max(angle, 360f + from);
+
+            return Mathf.Min(angle, to);
+        }
         #endregion
     }
 }

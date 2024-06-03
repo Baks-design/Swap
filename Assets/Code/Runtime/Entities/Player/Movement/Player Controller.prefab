@@ -138,7 +138,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 81a6153000036344e98c354b326e080c, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 81a6153000036344e98c354b326e080c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -234,7 +234,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8451436163467342785}
-  - component: {fileID: 6720968780699539116}
   m_Layer: 3
   m_Name: SFX
   m_TagString: Untagged
@@ -259,25 +258,6 @@ Transform:
   - {fileID: 3475699677545863966}
   m_Father: {fileID: 7341269073591842051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6720968780699539116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341315508425799269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada440121199460f982f12084abe1164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheckRadius: 0.1
-  controller: {fileID: 6970132139796431111}
-  footStepsSource: {fileID: 6264463685048014}
-  audioSource: {fileID: 4412532031930934133}
-  hurtAudioClips: []
-  deadAudioClips: []
-  MaterialMatchList: []
 --- !u!1 &404359305355074665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,8 +1676,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7341269073591842051}
   - component: {fileID: 6970132139796431111}
-  - component: {fileID: 1764550558195509187}
-  - component: {fileID: 1038829921226527548}
   m_Layer: 3
   m_Name: Player Controller
   m_TagString: Untagged
@@ -1736,96 +1714,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977ad917e6192a946b4c8aab1499be69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    maxHealth: 100
-    currentHealth: 100
-  weapon: {fileID: 7685235969932122177}
   cinemachine: {fileID: 6111745157497035600}
   meshRenderers:
   - {fileID: 4034579413555028281}
   - {fileID: 3703053438660929048}
---- !u!114 &1764550558195509187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337273524667124362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd33e0b712775f4a9b3eab538a374e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swapLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  swapRange: 50
-  swapfireRate: 0.25
-  revealLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  revealfireRate: 0.7
-  revealDistance: 20
-  controller: {fileID: 6970132139796431111}
---- !u!114 &1038829921226527548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337273524667124362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 601d4686cc0b70d45a98271d52094850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliderSize: {x: 1, y: 2, z: 1}
-  weight: 75
-  rigidbodyPushForce: 2
-  solidCollider: 0
-  viewTransform: {fileID: 465928348281070684}
-  playerRotationTransform: {fileID: 7341269073591842051}
-  crouchingHeightMultiplier: 0.5
-  crouchingSpeed: 10
-  crouchingEnabled: 1
-  slidingEnabled: 1
-  laddersEnabled: 1
-  supportAngledLadders: 1
-  useStepOffset: 0
-  stepOffset: 0.35
-  movementConfig:
-    autoBhop: 1
-    gravity: 20
-    jumpForce: 6.5
-    friction: 6
-    maxSpeed: 6
-    maxVelocity: 50
-    slopeLimit: 45
-    clampAirSpeed: 1
-    airCap: 0.6
-    airAcceleration: 6
-    airFriction: 0.4
-    walkSpeed: 7
-    sprintSpeed: 12
-    acceleration: 14
-    deceleration: 10
-    crouchSpeed: 4
-    crouchAcceleration: 8
-    crouchDeceleration: 4
-    crouchFriction: 3
-    minimumSlideSpeed: 9
-    maximumSlideSpeed: 18
-    slideSpeedMultiplier: 1.75
-    slideFriction: 14
-    downhillSlideSpeedMultiplier: 2.5
-    slideDelay: 0.5
-    swimUpSpeed: 12
-    underwaterSwimSpeed: 3
-    underwaterAcceleration: 6
-    underwaterDeceleration: 3
-    underwaterFriction: 2
-    underwaterGravity: 6
-    underwaterVelocityDampening: 2
+  health:
+    maxHealth: 100
+    currentHealth: 100
+  aiming:
+    bodyTransform: {fileID: 7341269073591842051}
+    sensitivityMultiplier: 1
+    horizontalSensitivity: 1
+    verticalSensitivity: 1
+    minYRotation: -45
+    maxYRotation: 45
+    punchDamping: 9
+    punchSpringConstant: 65
+    punchAngle: {x: 0, y: 0}
+    punchAngleVel: {x: 0, y: 0}
+  swap:
+    swapLayer:
+      serializedVersion: 2
+      m_Bits: 8
+    swapRange: 50
+    swapfireRate: 0.25
+    revealLayer:
+      serializedVersion: 2
+      m_Bits: 8
+    revealfireRate: 0.7
+    revealDistance: 20
+  sound:
+    groundCheckRadius: 0.1
+    footStepsSource: {fileID: 6264463685048014}
+    audioSource: {fileID: 4412532031930934133}
+    hurtAudioClips: []
+    deadAudioClips: []
+    MaterialMatchList: []
+  character:
+    colliderSize: {x: 1, y: 2, z: 1}
+    weight: 75
+    rigidbodyPushForce: 2
+    solidCollider: 0
+    viewTransform: {fileID: 465928348281070684}
+    playerRotationTransform: {fileID: 7341269073591842051}
+    crouchingHeightMultiplier: 0.5
+    crouchingSpeed: 10
+    crouchingEnabled: 1
+    slidingEnabled: 1
+    laddersEnabled: 1
+    supportAngledLadders: 1
+    useStepOffset: 0
+    stepOffset: 0.35
+    movementConfig:
+      autoBhop: 1
+      gravity: 20
+      jumpForce: 6.5
+      friction: 6
+      maxSpeed: 6
+      maxVelocity: 50
+      slopeLimit: 45
+      clampAirSpeed: 1
+      airCap: 0.4
+      airAcceleration: 12
+      airFriction: 0.4
+      walkSpeed: 7
+      sprintSpeed: 12
+      acceleration: 14
+      deceleration: 10
+      crouchSpeed: 4
+      crouchAcceleration: 8
+      crouchDeceleration: 4
+      crouchFriction: 3
+      minimumSlideSpeed: 9
+      maximumSlideSpeed: 18
+      slideSpeedMultiplier: 1.75
+      slideFriction: 14
+      downhillSlideSpeedMultiplier: 2.5
+      slideDelay: 0.5
+      swimUpSpeed: 12
+      underwaterSwimSpeed: 3
+      underwaterAcceleration: 6
+      underwaterDeceleration: 3
+      underwaterFriction: 2
+      underwaterGravity: 6
+      underwaterVelocityDampening: 2
 --- !u!1 &5424870695900593778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,7 +1807,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 465928348281070684}
-  - component: {fileID: 4125446801939482230}
   m_Layer: 3
   m_Name: Camera holder
   m_TagString: Untagged
@@ -1859,28 +1830,6 @@ Transform:
   - {fileID: 7298045640332069759}
   m_Father: {fileID: 7341269073591842051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4125446801939482230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5424870695900593778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 604093a680e6d5a488206647cc35be23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyTransform: {fileID: 7341269073591842051}
-  sensitivityMultiplier: 1
-  horizontalSensitivity: 1
-  verticalSensitivity: 1
-  minYRotation: -45
-  maxYRotation: 45
-  punchDamping: 9
-  punchSpringConstant: 65
-  punchAngle: {x: 0, y: 0}
-  punchAngleVel: {x: 0, y: 0}
 --- !u!1 &5493191121239776729
 GameObject:
   m_ObjectHideFlags: 0

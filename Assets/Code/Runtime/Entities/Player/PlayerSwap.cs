@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using KBCore.Refs;
 using SwapChains.Runtime.Utilities.Helpers;
 using SwapChains.Runtime.Utilities.ServicesLocator;
 using SwapChains.Runtime.VFX;
@@ -8,18 +7,19 @@ using UnityEngine;
 
 namespace SwapChains.Runtime.Entities.Player
 {
-    public class PlayerSwap : MonoBehaviour
+    [Serializable]
+    public class PlayerSwap
     {
         [Header("Swap Settings")]
         [SerializeField] LayerMask swapLayer;
         [SerializeField, Range(10f, 50f)] float swapRange = 50f;
         [SerializeField, Range(0.1f, 1f)] float swapfireRate = 0.25f;
+
         [Header("Reveal Settings")]
         [SerializeField] LayerMask revealLayer;
         [SerializeField, Range(0.1f, 1f)] float revealfireRate = 0.7f;
         [SerializeField, Range(1f, 50f)] float revealDistance = 20f;
-        [Header("Refs")]
-        [SerializeField, Self] PlayerController controller;
+
         float nextFire = 0f;
         (bool, RaycastHit) raycast = (false, new());
         Coroutine revealEffectCoroutine;
@@ -29,15 +29,13 @@ namespace SwapChains.Runtime.Entities.Player
         readonly WaitForSeconds timeForEndTransition = new(1f);
         readonly RaycastHit[] hits = new RaycastHit[1];
 
-        void OnValidate() => this.ValidateRefs();
-
-        void Start()
+        public void Update(PlayerController controller)
         {
-            SwapHandle();
-            RevealEnemyHandle();
+            SwapHandle(controller);
+            RevealEnemyHandle(controller);
         }
 
-        void SwapHandle()
+        void SwapHandle(PlayerController controller)
         {
             if (controller.GameTime > nextFire)
             {
@@ -45,12 +43,13 @@ namespace SwapChains.Runtime.Entities.Player
 
                 (raycast.Item1, raycast.Item2) = GameHelper.CheckInteraction(
                     controller.Camera, hits, swapRange, swapLayer, QueryTriggerInteraction.Ignore);
+
                 if (raycast.Item1)
-                    swapRoutine ??= StartCoroutine(SwapRoutine(raycast.Item2));
+                    swapRoutine ??= controller.StartCoroutine(SwapRoutine(raycast.Item2, controller));
             }
         }
 
-        IEnumerator SwapRoutine(RaycastHit hitPoint)
+        IEnumerator SwapRoutine(RaycastHit hitPoint, PlayerController controller)
         {
             swapRoutine = null;
 
@@ -66,16 +65,16 @@ namespace SwapChains.Runtime.Entities.Player
             interfaceEffects.ActiveTransition(false);
         }
 
-        void RevealEnemyHandle()
+        void RevealEnemyHandle(PlayerController controller)
         {
             if (controller.GameTime > nextFire)
             {
                 nextFire = controller.GameTime + revealfireRate;
-                revealEffectCoroutine ??= StartCoroutine(RevealEnemyRoutine());
+                revealEffectCoroutine ??= controller.StartCoroutine(RevealEnemyRoutine(controller));
             }
         }
 
-        IEnumerator RevealEnemyRoutine()
+        IEnumerator RevealEnemyRoutine(PlayerController controller)
         {
             revealEffectCoroutine = null;
 

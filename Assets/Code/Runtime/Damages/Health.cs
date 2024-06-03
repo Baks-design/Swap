@@ -25,7 +25,7 @@ namespace SwapChains.Runtime.Entities.Damages
 
         public Health(float maxHealth) : this(maxHealth, maxHealth) { }
 
-        public void Initialize() => listeners ??= new List<IHealthListener>();
+        public void Awake() => listeners ??= new List<IHealthListener>();
 
         public readonly void Register(IHealthListener listener)
         {

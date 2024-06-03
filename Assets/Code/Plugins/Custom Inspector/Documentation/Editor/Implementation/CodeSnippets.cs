@@ -348,7 +348,7 @@ namespace CustomInspector.Documentation
             void Start()
             {
                 //this.CheckForceFilled();
-                gob2 = GameObject.FindObjectOfType<GameObject>();
+                gob2 = GameObject.FindAnyObjectByType<GameObject>();
             }
         }
 

@@ -474,9 +474,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 397559296451482443, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 397559296451482443, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -150
+      objectReference: {fileID: 0}
     - target: {fileID: 2136781610008296397, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
       propertyPath: m_Name
       value: HUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679417788528203930, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679417788528203930, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679417788528203930, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
+      propertyPath: m_Maskable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5560640578196748767, guid: aa7fc7d8bd409634e998e0abade2a6f7, type: 3}
       propertyPath: m_Pivot.x

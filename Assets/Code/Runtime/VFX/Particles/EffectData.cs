@@ -1,4 +1,4 @@
-using SwapChains.Runtime.Utilities.Helpers;
+using SwapChains.Runtime.Utilities.Timers;
 using SwapChains.Runtime.Utilities.VFX;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -11,6 +11,6 @@ namespace SwapChains.Runtime.VFX
         public Material material;
         public AnimatableProperty[] animatableProperties;
         public ScriptableRendererFeature feature;
-        public Timer timer;
+        public CountdownTimer timer;
     }
 }
