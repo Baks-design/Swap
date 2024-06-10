@@ -13,6 +13,7 @@ namespace CustomInspector.Documentation
         AssetsOnlyAttribute,
         BackgroundColorAttribute,
         ButtonAttribute,
+        ColorPaletteAttribute,
         CopyPasteAttribute,
         DecimalsAttribute,
         Delayed2Attribute,
@@ -79,6 +80,7 @@ namespace CustomInspector.Documentation
         SerializableTuple,
         StaticsDrawer,
         //Unity
+        ColorUsageAttribute,
         DelayedAttribute,
         HeaderAttribute,
         HideInInspectorAttribute,
@@ -175,6 +177,7 @@ namespace CustomInspector.Documentation
             NewPropertyD.AssetsOnlyAttribute,
             NewPropertyD.BackgroundColorAttribute,
             NewPropertyD.ButtonAttribute,
+            NewPropertyD.ColorPaletteAttribute,
             NewPropertyD.CopyPasteAttribute,
             NewPropertyD.DecimalsAttribute,
             NewPropertyD.Delayed2Attribute,
@@ -245,6 +248,7 @@ namespace CustomInspector.Documentation
         };
         static readonly List<NewPropertyD> unityBuildIn = new List<NewPropertyD>()
         {
+            NewPropertyD.ColorUsageAttribute,
             NewPropertyD.DelayedAttribute,
             NewPropertyD.HeaderAttribute,
             NewPropertyD.HideInInspectorAttribute,

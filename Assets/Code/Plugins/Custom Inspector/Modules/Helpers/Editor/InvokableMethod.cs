@@ -38,6 +38,21 @@ namespace CustomInspector.Extensions
                 throw new MissingMethodException($"method '{methodName}' not found in '{owner.GetType()}'");
         }
 
+        public static bool HasMethod(DirtyValue obj, string methodPath,
+                                    Type[] parameterTypes = null, BindingFlags bindingAttr = PropertyValues.defaultBindingFlags)
+        {
+            try
+            {
+                GetMethod(obj, methodPath, parameterTypes, bindingAttr);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
         /// <exception cref="ArgumentException">invalid path</exception>
         /// <exception cref="MissingFieldException">A field name on the path is not found</exception>
         /// <exception cref="MissingMethodException">the method name on the end of the path was not found</exception>
@@ -66,7 +81,7 @@ namespace CustomInspector.Extensions
             {
                 info = ownerType.GetMethod(name: methodName, bindingAttr: bindingAttr, null, CallingConventions.Any, Type.EmptyTypes, null);
                 if (info == null)
-                    throw new MissingMethodException($"'{methodName}' not found in '{ownerType}'");
+                    throw new MissingMethodException($"'{methodName}' not found in '{ownerType}' without parameters");
             }
             else
             {

@@ -50,6 +50,14 @@ namespace CustomInspector.Documentation
             "\nUseful for editor scripts or frequently-used functions that should be easily accessible."
             , true) },
 
+            { NewPropertyD.ColorPaletteAttribute,
+            ("If you use the same colors all over your project, you can choose colors from your custom color swatch." +
+            "\nIf you foldout the property, it shows its current value and if the value matches a color on the palette, the given color is outlined." +
+            "\nEdit color palettes by clicking on the settings-icon." +
+            "\nThe color palette name in code has to match a palette name in the 'additional palettes'-section in the palettes settings." +
+            "\n\nNote: Color palettes are saved in the editor preferences and can be shared via right-click -> copy+paste."
+            , true) },
+
 
             { NewPropertyD.CopyPasteAttribute,
             ("Provides buttons for copying and pasting of variable values between programs using the system clipboard."
@@ -94,10 +102,10 @@ namespace CustomInspector.Documentation
             , false) },
 
             { NewPropertyD.GetSetAttribute,
-            ("Of course, you can validate input afterwards, but you can also add a getter and setter directly here." +
-            "\r\nWarning: If you don't make any changes to serialized fields on the actual object in the setter, " +
-            "e.g. if you only change other objects in the scene or static fields, " +
-            "then it will not be saved because unity thinks nothing has been changed"
+            ("A getter and setter to validate input or change the look in the inspector." +
+            "\nIf the getter has a parameter and the setter a matching returnType, the 'real' property won't be shown. " +
+            "Otherwise the property under the attribute will still be visible." +
+            "\n\nNote1: Only serialized fields will be saved by unity. Other changes (like on statics) will be reverted on application restart."
             , true) },
 
 
@@ -367,8 +375,9 @@ namespace CustomInspector.Documentation
             ("Same behaviour as System.Collections.Generic.List<> but with 2 differences:" +
             "\n\t1. All Attributes on it are applied to the whole list INSTEAD of to all elements of the list." +
             "\n\t2. It is serializable by JsonUtility." +
-            "\nNote: ListContainer and List are casting to each other implicitly, so you can still treat ListContainer as it would be of type List." +
-            "\nHint: If you want to use attributes both on the list-class and on the elements, you have to create your own class, that consists a list inside. " +
+            "\nHint1: Since List<List<int>> is not serializable in the inspector, you can use List<ListContainer<int>> instead." +
+            "\nHint2: ListContainer and List are casting to each other implicitly, so you can still treat ListContainer as it would be of type List." +
+            "\nHint3: If you want to use attributes both on the list-class and on the elements, you have to create your own class, that consists a list inside. " +
             "Then you can provide attributes on the inner list and on the outer class. " +
             "You can add the [Unwrap]-attribute additionally on your class so you only see the list in the inspector."
             , true) },
@@ -441,6 +450,12 @@ namespace CustomInspector.Documentation
 
 
             // ------UNITYS--------
+
+            { NewPropertyD.ColorUsageAttribute,
+            ("Unity Documentation:\n" +
+            "Attribute used to configure the usage of the ColorField and Color Picker for a color.\n" +
+            "\nUse this attribute on a Color to configure the Color Field and Color Picker to show/hide the alpha value and whether to treat the color as a HDR color or as a normal LDR color."
+            , true) },
 
             { NewPropertyD.DelayedAttribute,
             ("Unity Documentation:\n" +

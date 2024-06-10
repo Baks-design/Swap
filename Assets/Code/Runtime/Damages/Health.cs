@@ -7,25 +7,24 @@ namespace SwapChains.Runtime.Entities.Damages
     [Serializable]
     public struct Health
     {
-        [SerializeField] float maxHealth;
-        [SerializeField] float currentHealth;
+        [SerializeField] int maxHealth;
+        [SerializeField] int currentHealth;
         List<IHealthListener> listeners;
 
-        public readonly bool IsDepleted => currentHealth < Mathf.Epsilon;
-        public readonly float Normalized => currentHealth / maxHealth;
-        public readonly float Max => maxHealth;
-        public readonly float Current => currentHealth;
+        public readonly bool IsDepleted => currentHealth <= 0;
+        public readonly int Max => maxHealth;
+        public readonly int Current => currentHealth;
 
-        public Health(float maxHealth, float currentHealth)
+        public Health(int maxHealth, int currentHealth)
         {
             this.maxHealth = maxHealth;
             this.currentHealth = currentHealth;
             listeners = new List<IHealthListener>();
         }
 
-        public Health(float maxHealth) : this(maxHealth, maxHealth) { }
+        public Health(int maxHealth) : this(maxHealth, maxHealth) { }
 
-        public void Awake() => listeners ??= new List<IHealthListener>();
+        public void Initialize() => listeners ??= new List<IHealthListener>();
 
         public readonly void Register(IHealthListener listener)
         {
@@ -35,24 +34,24 @@ namespace SwapChains.Runtime.Entities.Damages
 
         public readonly bool Unregister(IHealthListener listener) => listeners.Remove(listener);
 
-        public void IncreaseMaxHealth(float amount) => ChangeValue(ref maxHealth, amount, float.MaxValue);
+        public void IncreaseMaxHealth(int amount) => ChangeValue(ref maxHealth, amount, int.MaxValue);
 
-        public void DecreaseMaxHealth(float amount) => ChangeValue(ref maxHealth, -amount, float.MaxValue);
+        public void DecreaseMaxHealth(int amount) => ChangeValue(ref maxHealth, -amount, int.MaxValue);
 
-        public void IncreaseCurrentHealth(float amount) => ChangeValue(ref currentHealth, amount, maxHealth);
+        public void IncreaseCurrentHealth(int amount) => ChangeValue(ref currentHealth, amount, maxHealth);
 
-        public void DecreaseCurrentHealth(float amount)
+        public void DecreaseCurrentHealth(int amount)
         {
             ChangeValue(ref currentHealth, -amount, maxHealth);
             if (IsDepleted)
                 InformListenersOnHealthDepleted();
         }
 
-        readonly void ChangeValue(ref float current, float amount, float max)
+        readonly void ChangeValue(ref int current, int amount, int max)
         {
             var newValue = Mathf.Clamp(current + amount, 0f, max);
             var diff = Mathf.Abs(newValue - current);
-            current = newValue;
+            current = (int)newValue;
             if (diff > 0f)
                 InformListenersOnHealthChange();
         }

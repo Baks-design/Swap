@@ -2,6 +2,7 @@
   "dependencies": {
     "com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#4.0.0",
     "com.kylewbanks.scenerefattribute": "https://github.com/KyleBanks/scene-ref-attribute.git",
+    "com.kyrylokuzyk.primetween": "file:../Assets/Code/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.smkplus.custom-toolbar": "https://github.com/smkplus/CustomToolbar.git#master",
     "com.tayx.graphy": "https://github.com/Tayx94/graphy.git",
     "com.unity.2d.sprite": "1.0.0",
@@ -17,12 +18,20 @@
     "com.unity.polybrush": "1.1.6",
     "com.unity.probuilder": "6.0.1",
     "com.unity.profiling.core": "1.0.2",
-    "com.unity.recorder": "5.1.0",
+    "com.unity.recorder": "5.1.1",
     "com.unity.render-pipelines.universal": "17.0.3",
     "com.unity.sequences": "2.1.1",
     "com.unity.timeline": "1.8.7",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualeffectgraph": "17.0.3",
+    "www.nulltale.asciifx": "https://github.com/NullTale/AsciiFx.git",
+    "www.nulltale.ditherfx": "https://github.com/NullTale/DitherFx.git",
+    "www.nulltale.flowfx": "https://github.com/NullTale/FlowFx.git",
+    "www.nulltale.gradientmap": "https://github.com/NullTale/GradientMapFilter.git",
+    "www.nulltale.oldmoviefx": "https://github.com/NullTale/OldMovieFx.git",
+    "www.nulltale.pixelation": "https://github.com/NullTale/PixelationFx.git",
+    "www.nulltale.vhsfx": "https://github.com/NullTale/VhsFx.git",
+    "www.nulltale.volfx": "https://github.com/NullTale/VolFx.git",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -46,6 +55,7 @@
     "com.unity.modules.unitywebrequestaudio": "1.0.0",
     "com.unity.modules.unitywebrequesttexture": "1.0.0",
     "com.unity.modules.unitywebrequestwww": "1.0.0",
+    "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0"
   }
 }

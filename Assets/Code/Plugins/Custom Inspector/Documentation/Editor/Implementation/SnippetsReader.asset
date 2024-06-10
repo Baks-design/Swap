@@ -87,14 +87,22 @@ MonoBehaviour:
     number.\", MessageBoxType.Info)]\r\n            [Button(nameof(LogNumber), true)]\r\n           
     public int _number;\r\n\r\n            void LogNumber(int n)\r\n            {\r\n               
     Debug.Log(n.ToString());\r\n            }\r\n        }\r\n\r\n        [SerializeField]
-    CopyPasteAttributeExamples copyPasteAttributeExamples = new CopyPasteAttributeExamples();\r\n\r\n       
-    [System.Serializable]\r\n        class CopyPasteAttributeExamples\r\n       
-    {\r\n            [CopyPaste]\r\n            public Vector3 v1\r\n               
-    = Vector3.forward;\r\n            [CopyPaste]\r\n            public Vector3 v2\r\n               
-    = Vector3.one;\r\n\r\n            [CopyPaste]\r\n            public Color c1\r\n               
-    = Color.white;\r\n            [CopyPaste]\r\n            public Color c2\r\n               
-    = new(.5f, .4f, .2f, 1);\r\n\r\n            [CopyPaste] public string _string
-    = \"Hello World!\";\r\n\r\n            [ShowMethod(nameof(GetCurrentClipboard))]\r\n           
+    ColorPaletteAttributeExamples colorPaletteAttributeExamples = new ColorPaletteAttributeExamples();\r\n\r\n       
+    [System.Serializable]\r\n        class ColorPaletteAttributeExamples\r\n       
+    {\r\n            [MessageBox(\"Click on the colors\", MessageBoxType.Info)]\r\n\r\n           
+    [ColorPalette]\r\n            public Color myImageColor1;\r\n\r\n           
+    [ColorPalette(hideFoldout = true)]\r\n            public Color myImageColor2;\r\n\r\n           
+    [HorizontalLine(\"\")]\r\n\r\n            [ColorPalette(\"Alternative Scheme\")]\r\n           
+    public Color alternativeColor1;\r\n\r\n            [LabelSettings(LabelStyle.NoLabel),\r\n               
+    ColorPalette(\"Alternative Scheme\")]\r\n            public Color alternativeColor2;\r\n       
+    }\r\n\r\n\r\n        [SerializeField] CopyPasteAttributeExamples copyPasteAttributeExamples
+    = new CopyPasteAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
+    class CopyPasteAttributeExamples\r\n        {\r\n            [CopyPaste]\r\n           
+    public Vector3 v1\r\n                = Vector3.forward;\r\n            [CopyPaste]\r\n           
+    public Vector3 v2\r\n                = Vector3.one;\r\n\r\n            [CopyPaste]\r\n           
+    public Color c1\r\n                = Color.white;\r\n            [CopyPaste]\r\n           
+    public Color c2\r\n                = new(.5f, .4f, .2f, 1);\r\n\r\n           
+    [CopyPaste] public string _string = \"Hello World!\";\r\n\r\n            [ShowMethod(nameof(GetCurrentClipboard))]\r\n           
     [SerializeField, HideField] bool b;\r\n\r\n            string GetCurrentClipboard()\r\n               
     => GUIUtility.systemCopyBuffer;\r\n        }\r\n\r\n\r\n        [SerializeField]
     DecimalsAttributeExamples decimalsAttributeExamples = new DecimalsAttributeExamples();\r\n\r\n       
@@ -133,19 +141,20 @@ MonoBehaviour:
     [Foldout]\r\n            public MonoBehaviour anyMonoBehaviour;\r\n        }\r\n\r\n       
     [SerializeField] ForceFillAttributeExamples forceFillAttributeExamples = new
     ForceFillAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
-    class ForceFillAttributeExamples\r\n        {\r\n            [ForceFill] public
-    GameObject gob1;\r\n\r\n            [ForceFill, SerializeField]\r\n           
-    string s2 = \"Make this String Empty.\";\r\n\r\n            [ForceFill(\"<undefined>\",\r\n                      
-    \"empty\", \"Empty\",\r\n                       \"undefined\")]\r\n           
-    public string s3 = \"<undefined>\";\r\n\r\n            [HorizontalLine(\"others\")]\r\n\r\n           
-    [ForceFill(\"(0, 0, 0)\"), SerializeField]\r\n            Vector3 c = new Vector3(0,
-    0, 0);\r\n\r\n            [ForceFill(null)] public GameObject gob2;\r\n\r\n           
-    [ForceFill(\"-1\"), SerializeField]\r\n            float f = -1;\r\n\r\n           
-    [HorizontalLine(\"only check if playing\")] //test it by starting your game and
-    then look back on this editorwindow\r\n                                                     
+    class ForceFillAttributeExamples\r\n        {\r\n            [ForceFill]\r\n           
+    public GameObject gob1;\r\n\r\n            [ForceFill(errorMessage = \"No Animation
+    without GameObject possible!!\")]\r\n            public GameObject gob2;\r\n\r\n           
+    [ForceFill, SerializeField]\r\n            string s2 = \"Make this String Empty.\";\r\n\r\n           
+    [ForceFill(\"<undefined>\",\r\n                       \"empty\", \"Empty\",\r\n                      
+    \"undefined\")]\r\n            public string s3 = \"<undefined>\";\r\n\r\n           
+    [HorizontalLine(\"others\")]\r\n\r\n            [ForceFill(\"(0, 0, 0)\"), SerializeField]\r\n           
+    Vector3 c = new Vector3(0, 0, 0);\r\n\r\n            [ForceFill(null)] public
+    GameObject gob3;\r\n\r\n            [ForceFill(\"-1\"), SerializeField]\r\n           
+    float f = -1;\r\n\r\n            [HorizontalLine(\"only check if playing\")]
+    //test it by starting your game and then look back on this editorwindow\r\n                                                     
     //or only check if playing (because it would get filled)\r\n            [ForceFill(onlyTestInPlayMode
     = true)] public GameObject gob = null;\r\n\r\n            void Start()\r\n           
-    {\r\n                //this.CheckForceFilled();\r\n                gob2 = GameObject.FindObjectOfType<GameObject>();\r\n           
+    {\r\n                //this.CheckForceFilled();\r\n                gob1 = GameObject.FindObjectOfType<GameObject>();\r\n           
     }\r\n        }\r\n\r\n        [SerializeField] FromChildrenAttributeExamples
     fromChildrenAttributeExamples = new FromChildrenAttributeExamples();\r\n\r\n       
     [System.Serializable]\r\n        class FromChildrenAttributeExamples\r\n       
@@ -156,18 +165,19 @@ MonoBehaviour:
     public class MyMonoBehaviour : MonoBehaviour\r\n            {\r\n\r\n           
     }\r\n        }\r\n\r\n        [SerializeField] GetSetAttributeExamples getSetAttributeExamples
     = new GetSetAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
-    class GetSetAttributeExamples\r\n        {\r\n            [MessageBox(\"Shown
-    as vector2, but in fact is vector3\", MessageBoxType.Info)]\r\n            [GetSet(nameof(GetPosition),
-    nameof(SetPosition))]\r\n\r\n            [HideField] public Vector3 position;\r\n\r\n           
-    Vector2 GetPosition()\r\n            {\r\n                return (Vector2)position;\r\n           
-    }\r\n            void SetPosition(Vector2 v)\r\n            {\r\n               
-    position = new(v.x, v.y, 5);\r\n            }\r\n\r\n            [HorizontalLine]\r\n\r\n           
-    [MessageBox(\"You can't insert odd numbers\", MessageBoxType.Info)]\r\n           
-    [GetSet(nameof(GetEvenNumber), nameof(SetEvenNumber),\r\n                   
-    label = \"Only Even Numbers:\", tooltip = \"You can't insert odd numbers\")]\r\n\r\n           
-    [HideField] public int evenNumber = 66;\r\n\r\n            int GetEvenNumber()\r\n               
-    => evenNumber;\r\n            void SetEvenNumber(int n)\r\n                =>
-    evenNumber = n - n % 2;\r\n        }\r\n\r\n        [SerializeField] GUIColorAttributeExamples
+    class GetSetAttributeExamples\r\n        {\r\n            [MessageBox(\"Replace
+    your property with a getter and a setter\" +\r\n                        \"\\n(this
+    Vector2 was a Vector3 before)\", MessageBoxType.Info)]\r\n\r\n            [GetSet(nameof(FlattenVector),
+    nameof(ExtendVector))]\r\n            public Vector3 v1;\r\n\r\n            Vector2
+    FlattenVector(Vector3 v) => new Vector2(v.x, v.y);\r\n            Vector3 ExtendVector(Vector2
+    v) => new Vector3(v.x, v.y, 1);\r\n\r\n            [HorizontalLine]\r\n\r\n           
+    [MessageBox(\"Add a field through a getter and a setter\", MessageBoxType.Info)]\r\n\r\n           
+    [GetSet(nameof(GetTuple), nameof(SetTuple))]\r\n            public string myString
+    = \"Hello World!\";\r\n            [ReadOnly] public float a;\r\n           
+    [ReadOnly] public float b;\r\n\r\n            Vector2 GetTuple()\r\n           
+    {\r\n                return new Vector2(a, b);\r\n            }\r\n           
+    void SetTuple(Vector2 v)\r\n            {\r\n                a = v.x;\r\n               
+    b = v.y;\r\n            }\r\n        }\r\n\r\n        [SerializeField] GUIColorAttributeExamples
     gUIColorAttributeExamples = new GUIColorAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
     class GUIColorAttributeExamples\r\n        {\r\n            [Title(\"Integers\")]\r\n           
     public int a;\r\n            public int b;\r\n\r\n            [GUIColor(FixedColor.Cyan)]\r\n           
@@ -375,7 +385,7 @@ MonoBehaviour:
     [ShowMethod(nameof(GetStartScene))]\r\n\r\n            [SerializeField, HideField]
     bool _;\r\n\r\n            int GetGameScene()\r\n                => gameScene;\r\n           
     string GetStartScene()\r\n                => startScene;\r\n\r\n        }\r\n\r\n       
-    [SerializeField] SelfFillPreview selfFillAttributeExamples = new SelfFillPreview();\r\n\r\n       
+    [SerializeField] SelfFillAttributeExamples selfFillAttributeExamples = new SelfFillAttributeExamples();\r\n\r\n       
     [System.Serializable] //i hide this class on purpose, because SelfFill does not
     work on scriptable objects\r\n        class SelfFillAttributeExamples\r\n       
     {\r\n            //In this example all these components are attached\r\n\r\n           
@@ -383,13 +393,9 @@ MonoBehaviour:
     audio;\r\n            [SelfFill(true)] public Light light;\r\n\r\n           
     /*\r\n             * this.CheckSelfFilled() == true;\r\n             *\r\n            
     * cam == GetComponent<Camera>()\r\n             * audio == GetComponent<AudioSource>()\r\n            
-    * light == GetComponent<Light>()\r\n             */\r\n\r\n        }\r\n       
-    [System.Serializable]\r\n        class SelfFillPreview\r\n        {\r\n           
-    [LabelSettings(newName: \"Cam (auto-filled)\")]\r\n            [ReadOnly(DisableStyle.GreyedOut)]\r\n           
-    public Camera cam;\r\n\r\n            void Start()\r\n            {\r\n               
-    cam = Camera.main;\r\n            }\r\n        }\r\n\r\n        [SerializeField]
-    ShowAssetReferenceAttributeExamples showAssetReferenceAttributeExamples = new
-    ShowAssetReferenceAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
+    * light == GetComponent<Light>()\r\n             */\r\n\r\n        }\r\n\r\n       
+    [SerializeField] ShowAssetReferenceAttributeExamples showAssetReferenceAttributeExamples
+    = new ShowAssetReferenceAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
     class ShowAssetReferenceAttributeExamples\r\n        {\r\n            [ShowAssetReference(\"CodeSnippets\")]
     // in this case you could also use 'nameof(CodeSnippets)'\r\n            public
     A a;\r\n\r\n            [HorizontalLine]\r\n\r\n            [ShowAssetReference]\r\n           
@@ -602,14 +608,15 @@ MonoBehaviour:
     // damage -> 35\r\n            }\r\n        }\r\n\r\n        [SerializeField]
     ListContainerExamples listContainerExamples = new ListContainerExamples();\r\n\r\n       
     [System.Serializable]\r\n        class ListContainerExamples\r\n        {\r\n           
-    [MessageBox(\"ShowIf is applied to the whole list.\" +\r\n                       
+    [MessageBox(\"New label and ShowIf and is applied to the whole list.\" +\r\n                       
     \"\\nList is shown if 'visible' is ticked.\", MessageBoxType.Info)]\r\n\r\n           
-    public bool visible = true;\r\n\r\n            [ShowIf(nameof(visible))]\r\n           
-    [ListContainer]\r\n            public ListContainer<int> myList;\r\n\r\n           
-    [HorizontalLine]\r\n            [MessageBox(\"MinAttribute is applied to all
-    elements.\" +\r\n                        \"\\nAll elements of the list are positive.\",
-    MessageBoxType.Info)]\r\n            [SerializeField, HideField] bool _;\r\n\r\n           
-    [Min(0)]\r\n            public List<int> myPositiveNumbers\r\n               
+    public bool visible = true;\r\n\r\n            [LabelSettings(\"New Label\"),\r\n           
+    ShowIf(nameof(visible))]\r\n            [ListContainer]\r\n            public
+    ListContainer<int> myList;\r\n\r\n            [HorizontalLine]\r\n           
+    [MessageBox(\"New labels and MinAttribute are applied to all elements.\" +\r\n                       
+    \"\\nAll elements of the list are positive.\", MessageBoxType.Info)]\r\n           
+    [SerializeField, HideField] bool _;\r\n\r\n            [LabelSettings(\"New Label\"),\r\n           
+    Min(0)]\r\n            public List<int> myPositiveNumbers\r\n               
     = new() { 1, 2, 3 };\r\n\r\n            private void Start()\r\n            {\r\n               
     string json = JsonUtility.ToJson(myList);\r\n                ListContainer<int>
     deserialized\r\n                    = JsonUtility.FromJson<ListContainer<int>>(json);\r\n           
@@ -724,8 +731,16 @@ MonoBehaviour:
     [Tuple] public SerializableTuple<int, string> tuple1 = new(1, \"a\");\r\n           
     [Tuple] public SerializableTuple<int, float, GameObject> tuple2 = new(1, 1.5f,
     null);\r\n        }\r\n\r\n        //----------------------------------------------------Unitys------------------------------------------------\r\n       
-    [HorizontalLine(\"Unitys\", 3)]\r\n\r\n        [SerializeField] DelayedAttributeExamples
-    delayedAttributeExamples = new DelayedAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
+    [HorizontalLine(\"Unitys\", 3)]\r\n\r\n        [SerializeField] ColorUsageAttributeExamples
+    colorUsageAttributeExamples = new ColorUsageAttributeExamples();\r\n\r\n       
+    [System.Serializable]\r\n        class ColorUsageAttributeExamples\r\n       
+    {\r\n            [Title(\"Alpha\")]\r\n            [ColorUsage(showAlpha: true)]\r\n           
+    public Color c1 = Color.white;\r\n            [ColorUsage(showAlpha: false)]\r\n           
+    public Color c2 = Color.red;\r\n\r\n            [Title(\"HDR\")]\r\n           
+    [ColorUsage(true, hdr: true)]\r\n            public Color c3 = Color.magenta;\r\n           
+    [ColorUsage(true, hdr: false)]\r\n            public Color c4 = Color.cyan;\r\n       
+    }\r\n\r\n        [SerializeField] DelayedAttributeExamples delayedAttributeExamples
+    = new DelayedAttributeExamples();\r\n\r\n        [System.Serializable]\r\n       
     class DelayedAttributeExamples\r\n        {\r\n            [Delayed]\r\n           
     public string delayed = \"Edit Here\";\r\n\r\n            public string instant
     = \"Edit Here\";\r\n\r\n\r\n            [ShowMethod(nameof(GetDelayedOne))]\r\n           
@@ -797,7 +812,7 @@ MonoBehaviour:
       info: 0
       values:
         _: 0
-        values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f00000050000000
+        values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000
       editor_input: 0
     values:
       _: 0
@@ -814,156 +829,160 @@ MonoBehaviour:
         end: 5098
       - start: 5302
         end: 6094
-      - start: 6310
-        end: 6939
-      - start: 7153
-        end: 7472
-      - start: 7684
-        end: 8098
-      - start: 8356
-        end: 8688
-      - start: 8912
-        end: 9068
-      - start: 9276
-        end: 9793
-      - start: 10009
-        end: 11090
-      - start: 11318
-        end: 11731
-      - start: 11935
-        end: 12847
-      - start: 13059
-        end: 13892
-      - start: 14108
-        end: 14677
-      - start: 14873
-        end: 15256
-      - start: 15496
-        end: 17526
-      - start: 17762
-        end: 18578
-      - start: 18784
-        end: 19197
-      - start: 19429
-        end: 19788
-      - start: 20020
-        end: 20612
-      - start: 20812
-        end: 21068
-      - start: 21264
-        end: 22823
-      - start: 23015
-        end: 23616
-      - start: 23836
-        end: 24280
-      - start: 24476
-        end: 24984
-      - start: 25204
-        end: 25490
-      - start: 25698
-        end: 26060
-      - start: 26284
-        end: 27166
-      - start: 27378
-        end: 28073
-      - start: 28297
-        end: 28853
-      - start: 29065
-        end: 29597
-      - start: 29797
-        end: 30241
-      - start: 30518
-        end: 30982
-      - start: 31551
-        end: 31998
-      - start: 32202
-        end: 34596
-      - start: 34808
-        end: 35024
-      - start: 35248
-        end: 35463
-      - start: 35679
-        end: 36828
-      - start: 37048
-        end: 37423
-      - start: 37651
-        end: 38027
-      - start: 38231
-        end: 38450
-      - start: 38646
-        end: 39541
-      - start: 39733
-        end: 39821
-      - start: 40021
-        end: 40880
-      - start: 41088
-        end: 41554
-      - start: 41774
-        end: 42041
-      - start: 42245
-        end: 42466
-      - start: 42662
-        end: 42827
-      - start: 43031
-        end: 43564
-      - start: 43756
-        end: 44089
-      - start: 44301
-        end: 44708
-      - start: 45039
-        end: 45246
-      - start: 45442
-        end: 46401
-      - start: 46577
-        end: 47121
-      - start: 47305
-        end: 48139
-      - start: 48319
-        end: 48850
-      - start: 49046
-        end: 49958
-      - start: 50154
-        end: 50735
-      - start: 50963
-        end: 51462
-      - start: 51686
-        end: 52171
-      - start: 52403
-        end: 54002
-      - start: 54230
-        end: 55149
-      - start: 55405
-        end: 55935
-      - start: 56139
-        end: 57476
-      - start: 57704
-        end: 58138
-      - start: 58897
-        end: 59076
-      - start: 58336
-        end: 58685
-      - start: 59443
-        end: 59857
-      - start: 60063
-        end: 60310
-      - start: 60550
-        end: 60991
-      - start: 61183
-        end: 61361
-      - start: 61577
-        end: 61661
-      - start: 61897
-        end: 62054
-      - start: 62286
-        end: 62611
-      - start: 62811
-        end: 62904
-      - start: 63104
-        end: 63257
-      - start: 63465
-        end: 63869
-      - start: 64081
-        end: 64267
+      - start: 6322
+        end: 6835
+      - start: 7053
+        end: 7682
+      - start: 7896
+        end: 8215
+      - start: 8427
+        end: 8841
+      - start: 9099
+        end: 9431
+      - start: 9655
+        end: 9811
+      - start: 10019
+        end: 10536
+      - start: 10752
+        end: 11971
+      - start: 12199
+        end: 12612
+      - start: 12816
+        end: 13777
+      - start: 13989
+        end: 14822
+      - start: 15038
+        end: 15607
+      - start: 15803
+        end: 16186
+      - start: 16426
+        end: 18456
+      - start: 18692
+        end: 19508
+      - start: 19714
+        end: 20127
+      - start: 20359
+        end: 20718
+      - start: 20950
+        end: 21542
+      - start: 21742
+        end: 21998
+      - start: 22194
+        end: 23753
+      - start: 23945
+        end: 24546
+      - start: 24766
+        end: 25210
+      - start: 25406
+        end: 25914
+      - start: 26134
+        end: 26420
+      - start: 26628
+        end: 26990
+      - start: 27214
+        end: 28096
+      - start: 28308
+        end: 29003
+      - start: 29227
+        end: 29783
+      - start: 29995
+        end: 30527
+      - start: 30727
+        end: 31171
+      - start: 31468
+        end: 31932
+      - start: 32184
+        end: 32631
+      - start: 32835
+        end: 35229
+      - start: 35441
+        end: 35657
+      - start: 35881
+        end: 36096
+      - start: 36312
+        end: 37461
+      - start: 37681
+        end: 38056
+      - start: 38284
+        end: 38660
+      - start: 38864
+        end: 39083
+      - start: 39279
+        end: 40174
+      - start: 40366
+        end: 40454
+      - start: 40654
+        end: 41513
+      - start: 41721
+        end: 42187
+      - start: 42407
+        end: 42674
+      - start: 42878
+        end: 43099
+      - start: 43295
+        end: 43460
+      - start: 43664
+        end: 44197
+      - start: 44389
+        end: 44722
+      - start: 44934
+        end: 45341
+      - start: 45672
+        end: 45879
+      - start: 46075
+        end: 47034
+      - start: 47210
+        end: 47754
+      - start: 47938
+        end: 48772
+      - start: 48952
+        end: 49483
+      - start: 49679
+        end: 50707
+      - start: 50903
+        end: 51484
+      - start: 51712
+        end: 52211
+      - start: 52435
+        end: 52920
+      - start: 53152
+        end: 54751
+      - start: 54979
+        end: 55898
+      - start: 56154
+        end: 56684
+      - start: 56888
+        end: 58225
+      - start: 58453
+        end: 58887
+      - start: 59646
+        end: 59825
+      - start: 59085
+        end: 59434
+      - start: 60204
+        end: 60612
+      - start: 60820
+        end: 61234
+      - start: 61440
+        end: 61687
+      - start: 61927
+        end: 62368
+      - start: 62560
+        end: 62738
+      - start: 62954
+        end: 63038
+      - start: 63274
+        end: 63431
+      - start: 63663
+        end: 63988
+      - start: 64188
+        end: 64281
+      - start: 64481
+        end: 64634
+      - start: 64842
+        end: 65246
+      - start: 65458
+        end: 65644
     editor_keyInput: 0
     editor_valueInput:
       start: 0
@@ -999,6 +1018,11 @@ MonoBehaviour:
     buttonAttributeExamples:
       _bool: 0
       _number: 0
+    colorPaletteAttributeExamples:
+      myImageColor1: {r: 0.01, g: 0.36, b: 0.59, a: 1}
+      myImageColor2: {r: 0.7, g: 0.8, b: 0.88, a: 1}
+      alternativeColor1: {r: 0, g: 1, b: 0.88, a: 1}
+      alternativeColor2: {r: 1, g: 1, b: 0, a: 1}
     copyPasteAttributeExamples:
       v1: {x: 0, y: 0, z: 1}
       v2: {x: 1, y: 1, z: 1}
@@ -1026,18 +1050,21 @@ MonoBehaviour:
       anyMonoBehaviour: {fileID: 0}
     forceFillAttributeExamples:
       gob1: {fileID: 0}
+      gob2: {fileID: 0}
       s2: 
       s3: <undefined>
       c: {x: 0, y: 0, z: 0}
-      gob2: {fileID: 0}
+      gob3: {fileID: 0}
       f: -1
       gob: {fileID: 0}
     fromChildrenAttributeExamples:
       _childs: {fileID: 0}
       _childs2: {fileID: 0}
     getSetAttributeExamples:
-      position: {x: 0, y: 0, z: 0}
-      evenNumber: 66
+      v1: {x: 1, y: 3, z: 1}
+      myString: Hello World!
+      a: 6
+      b: 5
     gUIColorAttributeExamples:
       a: 0
       b: 0
@@ -1177,6 +1204,8 @@ MonoBehaviour:
       _: 0
     selfFillAttributeExamples:
       cam: {fileID: 0}
+      audio: {fileID: 0}
+      light: {fileID: 0}
     showAssetReferenceAttributeExamples:
       a:
         name: Some Custom Class
@@ -1515,6 +1544,11 @@ MonoBehaviour:
         item1: 1
         item2: 1.5
         item3: {fileID: 0}
+    colorUsageAttributeExamples:
+      c1: {r: 1, g: 1, b: 1, a: 0}
+      c2: {r: 1, g: 0, b: 0, a: 0}
+      c3: {r: 1, g: 0, b: 1, a: 0}
+      c4: {r: 0, g: 0, b: 0, a: 0}
     delayedAttributeExamples:
       delayed: Edit here
       instant: Edit here

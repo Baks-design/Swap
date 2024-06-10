@@ -13,6 +13,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 241058
   packageName: Custom Inspector
-  packageVersion: 3.4.1
-  assetPath: Assets/Code/Plugins/Editor/Custom Inspector/Modules/Attributes/PropertyDrawer/UnitAttribute.cs
-  uploadId: 667389
+  packageVersion: 3.4.4
+  assetPath: Assets/Code/Plugins/Custom Inspector/Modules/Attributes/PropertyDrawer/UnitAttribute.cs
+  uploadId: 669659

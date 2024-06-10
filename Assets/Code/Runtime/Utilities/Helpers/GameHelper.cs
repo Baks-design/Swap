@@ -74,38 +74,5 @@ namespace SwapChains.Runtime.Utilities.Helpers
             InputSystem.actions.FindActionMap("Humanoid").Disable();
         }
         #endregion
-
-        #region Physics
-        public static (bool, RaycastHit) CheckInteraction(
-            Camera mainCam, RaycastHit[] hits, float range, LayerMask layer, QueryTriggerInteraction query)
-        {
-            bool isColliding = default;
-            RaycastHit hit = default;
-            var ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            var hitCount = Physics.RaycastNonAlloc(ray, hits, range, layer, query);
-            if (hitCount > 0)
-            {
-                hit = hits[0];
-                isColliding = true;
-            }
-
-            return (isColliding, hit);
-        }
-
-        /// <param name="angle"></param>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        public static float ClampAngle(float angle, float from, float to)
-        {
-            if (angle < 0f)
-                angle = 360f + angle;
-
-            if (angle > 180f)
-                return Mathf.Max(angle, 360f + from);
-
-            return Mathf.Min(angle, to);
-        }
-        #endregion
     }
 }

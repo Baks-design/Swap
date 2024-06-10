@@ -151,7 +151,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.2
   far clip plane: 500
   field of view: 60
   orthographic: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   WorldUpOverride: {fileID: 0}
   ChannelMask: 1
   UpdateMethod: 2
-  BlendUpdateMethod: 0
+  BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 1
     DefaultMode: 2

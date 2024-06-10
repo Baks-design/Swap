@@ -19,7 +19,8 @@ namespace SwapChains.Runtime.Utilities.Helpers.Cam
 
         public void UpdateTarget(FieldOfViewData fieldOfViewData)
         {
-            if (ValidateTarget(CurrentTarget, fieldOfViewData)) return;
+            if (ValidateTarget(CurrentTarget, fieldOfViewData)) 
+                return;
 
             CurrentTarget = null;
 

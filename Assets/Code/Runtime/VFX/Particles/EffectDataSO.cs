@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace SwapChains.Runtime.VFX
 {
-    [CreateAssetMenu(menuName = "SO/" + nameof(EffectDataSO))]
+    [CreateAssetMenu(menuName = "SwapChains/Effects/" + nameof(EffectDataSO))]
     public class EffectDataSO : ScriptableObject
     {
         [SerializeField] Material material;
@@ -25,10 +25,8 @@ namespace SwapChains.Runtime.VFX
 
         public EffectData GetEffectData(UniversalRenderPipelineAsset renderPipelineAsset)
         {
-            // TODO : EffectDataSO => GetEffectData - Optimization. Do not use reflection
             var scriptableRendererData = GetRendererData(renderPipelineAsset);
-            //if (supportedRenderers.Contains(scriptableRendererData) is false) return true;
-            
+         
             var list = ListPool<AnimatableProperty>.Get();
             list.AddRange(floatAnimatableProperties);
             list.AddRange(colorAnimatableProperties);
@@ -38,6 +36,7 @@ namespace SwapChains.Runtime.VFX
             
             var arr = list.ToArray();
             ListPool<AnimatableProperty>.Release(list);
+            
             return new EffectData
             {
                 deactivateOnComplete = deactivateOnComplete,

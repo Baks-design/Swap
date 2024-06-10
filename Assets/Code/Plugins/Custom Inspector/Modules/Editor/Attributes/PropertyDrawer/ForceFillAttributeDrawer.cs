@@ -41,9 +41,17 @@ namespace CustomInspector.Editor
             object value = property.GetValue();
             if (info.Invalids.Contains(value))
             {
-                string errorMessage = $"ForceFill: Value of '{ToString(value)}' on '{property.name}' is not valid.";
-                if (info.Invalids.Length > 1)
-                    errorMessage += $"\nForbidden Values are: {string.Join(", ", info.Invalids.Select(_ => ToString(_)))}";
+                string errorMessage;
+                if (!string.IsNullOrEmpty(ffa.errorMessage))
+                {
+                    errorMessage = ffa.errorMessage;
+                }
+                else
+                {
+                    errorMessage = $"ForceFill: Value of '{ToString(value)}' on '{property.name}' is not valid.";
+                    if (info.Invalids.Length > 1)
+                        errorMessage += $"\nForbidden Values are: {string.Join(", ", info.Invalids.Select(_ => ToString(_)))}";
+                }
 
                 DrawProperties.DrawPropertyWithMessage(position, label, property,
                             errorMessage, MessageType.Error);

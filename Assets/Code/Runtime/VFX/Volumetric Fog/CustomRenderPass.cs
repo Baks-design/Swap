@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
 
 namespace SwapChains.Runtime.VFX.VolumetricFog
@@ -18,7 +17,8 @@ namespace SwapChains.Runtime.VFX.VolumetricFog
 
         public CustomRenderPass(Settings settings)
         {
-            if (settings == null) return;
+            if (settings == null)
+                return;
 
             this.settings = settings;
             RenderTextureFormat renderTextureFormat;
@@ -52,7 +52,7 @@ namespace SwapChains.Runtime.VFX.VolumetricFog
             fogTextureDescriptor = new RenderTextureDescriptor(Screen.width, Screen.height, renderTextureFormat, 0);
             depthTextureDescriptor = new RenderTextureDescriptor(Screen.width, Screen.height, RenderTextureFormat.RFloat, 0);
         }
-        
+
         #region Obsolete
         // This method is called before executing the render pass.
         // It can be used to configure render targets and their clear state. Also to create temporary render target textures.

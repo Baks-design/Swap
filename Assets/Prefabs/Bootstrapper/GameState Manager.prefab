@@ -44,5 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94e1d31fafbcc047b7132dab037561e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 11400000, guid: 59fe9b051e00e7540ba79225960ab746, type: 2}
-  inputReader: {fileID: 11400000, guid: ce7c7a750b3db654eb8dcd941ff04888, type: 2}

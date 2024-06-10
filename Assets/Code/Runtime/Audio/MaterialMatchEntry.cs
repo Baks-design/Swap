@@ -3,7 +3,7 @@ using UnityEngine.Audio;
 
 namespace SwapChains.Runtime.Audio
 {
-    [CreateAssetMenu(menuName = "SwapChain/Audio/MaterialMatchEntryType")]
+    [CreateAssetMenu(menuName = "SwapChains/Audio/MaterialMatchEntryType")]
     public class MaterialMatchEntry : ScriptableObject
     {
         public AudioResource RandomContainer;

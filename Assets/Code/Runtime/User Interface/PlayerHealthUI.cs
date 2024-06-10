@@ -6,16 +6,23 @@ using UnityEngine.UI;
 
 namespace SwapChains.Runtime.UserInterface
 {
-    public class PlayerHealthUI : ValidatedMonoBehaviour, IHealthListener
+    [RequireComponent(typeof(Image))]
+    public class PlayerHealthUI : MonoBehaviour, IHealthListener //TODO: CHECK 
     {
-        [SerializeField, Child] Image healthIndicator;
+        [SerializeField, Self] Image health;
+
         IDamageable damageable;
-        
+        static readonly int SegmentCount = Shader.PropertyToID("_SegmentCount");
+
+        void OnValidate() => this.ValidateRefs();
+
         void OnEnable()
         {
             GameEvents.OnDamageableLoaded += OnDamageableLoaded;
             damageable?.GetHealth().Register(this);
         }
+
+        void Start() => health.enabled = true;
 
         void OnDisable()
         {
@@ -27,16 +34,20 @@ namespace SwapChains.Runtime.UserInterface
         {
             damageable?.GetHealth().Unregister(this);
             damageable = obj as IDamageable;
-            
+
             var health = damageable.GetHealth();
             health.Register(this);
-            UpdateUI(health.Normalized);
+            UpdateUI(health.Current);
         }
 
-        void UpdateUI(float normalizedHealth) => healthIndicator.fillAmount = normalizedHealth;
+        void IHealthListener.OnHealthChange(HealthChange healthChange) => UpdateUI(healthChange.currentHealth);
 
-        void IHealthListener.OnHealthChange(HealthChange healthChange) => UpdateUI(healthChange.normalized);
+        void IHealthListener.OnHealthDepleted(HealthChange healthChange) => UpdateUI(healthChange.currentHealth);
 
-        void IHealthListener.OnHealthDepleted(HealthChange healthChange) => UpdateUI(healthChange.normalized);
+        void UpdateUI(int currentHealth)  //TODO: Continue
+        {
+            if (health.material.HasProperty(SegmentCount))
+                health.material.SetFloat(SegmentCount, -1);
+        }
     }
 }

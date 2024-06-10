@@ -17,7 +17,8 @@ namespace SwapChains.Runtime.VFX
 
         void Update()
         {
-            if (timer.IsRunning) enabled = false;
+            if (timer.IsRunning)
+                enabled = false;
             cam.Lens.FieldOfView = Mathf.Lerp(initialFOV, targetFOV, timer.Progress);
         }
 
@@ -33,7 +34,8 @@ namespace SwapChains.Runtime.VFX
 #if UNITY_EDITOR
         void OnValidate()
         {
-            if (cam) return;
+            if (cam)
+                return;
             cam = GetComponent<CinemachineCamera>();
         }
 #endif

@@ -58,7 +58,8 @@ namespace SwapChains.Runtime.VFX
             var length = arr.Length;
             for (var i = 0; i < length; i++)
             {
-                if (IsActive(arr[i])) continue;
+                if (IsActive(arr[i])) 
+                    continue;
                 PlayEffect(arr[i]);
             }
         }

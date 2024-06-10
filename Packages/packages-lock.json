@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.baracuda.runtime-monitoring": {
+      "version": "file:com.baracuda.runtime-monitoring",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.eflatun.scenereference": {
       "version": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#4.0.0",
       "depth": 0,
@@ -16,6 +22,12 @@
       "source": "git",
       "dependencies": {},
       "hash": "c502387f600d47c983d68f87981519daa00fc26a"
+    },
+    "com.kyrylokuzyk.primetween": {
+      "version": "file:../Assets/Code/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {}
     },
     "com.smkplus.custom-toolbar": {
       "version": "https://github.com/smkplus/CustomToolbar.git#master",
@@ -197,7 +209,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.recorder": {
-      "version": "5.1.0",
+      "version": "5.1.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -353,6 +365,78 @@
         "com.unity.shadergraph": "17.0.3",
         "com.unity.render-pipelines.core": "17.0.3"
       }
+    },
+    "www.nulltale.asciifx": {
+      "version": "https://github.com/NullTale/AsciiFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "95ef83f6deaaccbeb2528a4673767dde3a4d994e"
+    },
+    "www.nulltale.ditherfx": {
+      "version": "https://github.com/NullTale/DitherFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "c3fdac5f11962b0f6671508d5d279b973b33b72b"
+    },
+    "www.nulltale.flowfx": {
+      "version": "https://github.com/NullTale/FlowFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "fc4ee5b62f598317117f2c380628f8ff536034c9"
+    },
+    "www.nulltale.gradientmap": {
+      "version": "https://github.com/NullTale/GradientMapFilter.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "66e52e07fc451cb2d091a13aff2f03705fabcd31"
+    },
+    "www.nulltale.oldmoviefx": {
+      "version": "https://github.com/NullTale/OldMovieFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "8c3f992ab44a3444955d39b48e50775f904510d5"
+    },
+    "www.nulltale.pixelation": {
+      "version": "https://github.com/NullTale/PixelationFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "8a61ade7138e2a923d9230f54f507ca1649a31b8"
+    },
+    "www.nulltale.vhsfx": {
+      "version": "https://github.com/NullTale/VhsFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "6111d187ad019cb39e77baccdb11123a7f551bff"
+    },
+    "www.nulltale.volfx": {
+      "version": "https://github.com/NullTale/VolFx.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.6"
+      },
+      "hash": "7627bd41339716555c66403ae876a874dc587703"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
@@ -525,6 +609,14 @@
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0"
+      }
+    },
+    "com.unity.modules.vehicles": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
       }
     },
     "com.unity.modules.video": {

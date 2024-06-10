@@ -29,16 +29,25 @@ namespace CustomInspector
         }
         public ListContainer(List<T> collection) : base()
         {
+            if (collection == null)
+                throw new ArgumentNullException($"Provided {nameof(collection)} is null.");
             values = collection;
         }
         public ListContainer(IEnumerable<T> collection) : base()
         {
+            if (collection == null)
+                throw new ArgumentNullException($"Provided {nameof(collection)} is null.");
             values = collection.ToList();
         }
 
         // COMPATIBILITY
-        public static implicit operator ListContainer<T>(List<T> list) => new(list);
-        public static implicit operator List<T>(ListContainer<T> container) => container.values;
+        public static implicit operator ListContainer<T>(List<T> list)
+        {
+            if (list != null)
+                return new ListContainer<T>(list);
+            return null;
+        }
+        public static implicit operator List<T>(ListContainer<T> container) => container?.values;
 
         // LIST METHODS
         public T this[int index] { get => values[index]; set => values[index] = value; }

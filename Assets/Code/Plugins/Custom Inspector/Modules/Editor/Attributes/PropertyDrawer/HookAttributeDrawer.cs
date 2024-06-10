@@ -1,6 +1,8 @@
 using CustomInspector.Extensions;
 using CustomInspector.Helpers.Editor;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -22,26 +24,77 @@ namespace CustomInspector.Editor
             }
 
 
-            object oldValue = property.GetValue();
-
-            EditorGUI.BeginChangeCheck();
-            DrawProperties.PropertyField(position, label, property);
-            if (EditorGUI.EndChangeCheck())
+            if (Selection.count <= 1) //single editing
             {
-                object newValue = property.GetValue();
+                object oldValue = property.GetValue();
 
-                HookAttribute a = (HookAttribute)attribute;
-                if (a.useHookOnly)
+                EditorGUI.BeginChangeCheck();
+                DrawProperties.PropertyField(position, label, property);
+                if (EditorGUI.EndChangeCheck())
                 {
-                    //Revert change on property
-                    property.SetValue(oldValue);
+                    object newValue = property.GetValue();
+
+                    HookAttribute a = (HookAttribute)attribute;
+                    if (a.useHookOnly)
+                    {
+                        //Revert change on property
+                        property.SetValue(oldValue);
+                    }
+                    //property to instantiation
+                    property.serializedObject.ApplyModifiedProperties();
+                    //method on instantiation
+                    info.HookMethod(property, oldValue, newValue);
+                    //instantiation to property
+                    property.serializedObject.ApplyModifiedFields(true);
                 }
-                //property to instantiation
-                property.serializedObject.ApplyModifiedProperties();
-                //method on instantiation
-                info.hookMethod(property, oldValue, newValue);
-                //instantiation to property
-                property.serializedObject.ApplyModifiedFields(true);
+            }
+            else // multiediting
+            {
+                List<SerializedObject> serializedObjects = property.serializedObject.targetObjects.Select(_ => new SerializedObject(_)).ToList();
+                List<SerializedProperty> serializedProperties = serializedObjects.Select(so => so.FindProperty(property.propertyPath)).ToList();
+                List<object> oldValues = serializedProperties.Select(p => p.GetValue()).ToList();
+
+                EditorGUI.BeginChangeCheck();
+                DrawProperties.PropertyField(position, label, property);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    object newValue = property.GetValue();
+
+                    //remove not changed ones
+                    if (property.propertyType != SerializedPropertyType.Generic) //on generics the equals is overridden often, so we cant really know if something changed
+                    {
+                        for (int i = 0; i < oldValues.Count; i++)
+                        {
+                            bool equal = oldValues[i] == null ? newValue == null : oldValues[i].Equals(newValue);
+                            if (equal)
+                            {
+                                serializedObjects.RemoveAt(i);
+                                serializedProperties.RemoveAt(i);
+                                oldValues.RemoveAt(i);
+                                i--;
+                            }
+                        }
+                        Debug.Assert(oldValues.Count > 0, $"{nameof(HookAttribute)}: Hook not executed, because new value *equals* old value.");
+                    }
+
+                    //revert changes if hook only
+                    HookAttribute a = (HookAttribute)attribute;
+                    if (a.useHookOnly)
+                    {
+                        //Revert change on property
+                        for (int i = 0; i < serializedProperties.Count; i++)
+                            serializedProperties[i].SetValue(oldValues[i]);
+                    }
+                    //property to instantiation
+                    foreach (var so in serializedObjects)
+                        so.ApplyModifiedProperties();
+                    //method on instantiation
+                    for (int i = 0; i < serializedProperties.Count; i++)
+                        info.HookMethod(serializedProperties[i], oldValues[i], newValue);
+                    //instantiation to property
+                    foreach (var so in serializedObjects)
+                        so.ApplyModifiedFields(true);
+                }
             }
         }
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -61,7 +114,7 @@ namespace CustomInspector.Editor
             public string ErrorMessage { get; private set; }
             public bool MethodHasParameters { get; private set; }
             /// <summary> A method that executes on with property, oldValue & newValue </summary>
-            public Action<SerializedProperty, object, object> hookMethod { get; private set; }
+            public Action<SerializedProperty, object, object> HookMethod { get; private set; }
 
             public PropInfo() { }
             public void Initialize(SerializedProperty property, PropertyAttribute attr, FieldInfo fieldInfo)
@@ -115,18 +168,36 @@ namespace CustomInspector.Editor
 
                 if (MethodHasParameters)
                 {
-                    hookMethod = (p, o, n) =>
+                    HookMethod = (p, o, n) =>
                     {
                         if (ifExecute())
-                            p.GetMethodOnOwner(attribute.methodPath, new Type[] { propertyType, propertyType }).Invoke(o, n);
+                        {
+                            try
+                            {
+                                p.CallMethodOnOwner(attribute.methodPath, new Type[] { propertyType, propertyType }, new object[] { o, n });
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                            }
+                        }
                     };
                 }
                 else
                 {
-                    hookMethod = (p, o, n) =>
+                    HookMethod = (p, o, n) =>
                     {
                         if (ifExecute())
-                            p.GetMethodOnOwner(attribute.methodPath).Invoke();
+                        {
+                            try
+                            {
+                                p.CallMethodOnOwner(attribute.methodPath);
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                            }
+                        }
                     };
                 }
             }

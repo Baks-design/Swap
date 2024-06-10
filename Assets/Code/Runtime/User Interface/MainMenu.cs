@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 namespace SwapChains.Runtime.UserInterface
 {
-    public class MainMenu : ValidatedMonoBehaviour
+    public class MainMenu : MonoBehaviour
     {
         [SerializeField] GameObject menuContainer;
         [SerializeField, Child] Button quitButton;
 
-        void Awake() => menuContainer.SetActive(SceneManager.GetActiveScene().name is "Menu");
+        void OnValidate() => this.ValidateRefs();
+
+        void Awake() => menuContainer.SetActive(SceneManager.GetActiveScene().name.Equals("Menu"));
 
         void OnEnable() => quitButton.onClick.AddListener(() => GameHelper.QuitGame());
 

@@ -1,28 +1,25 @@
 using SwapChains.Runtime.GameplayManagement;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using SwapChains.Runtime.Utilities.ServicesLocator;
+using SwapChains.Runtime.Entities.Player;
 
 namespace SwapChains.Runtime.UserInterface
 {
-    public class PauseMenu : MonoBehaviour
+    public class PauseMenu : MonoBehaviour //TODO: CHECK 
     {
         [SerializeField] GameObject container;
-        InputAction pauseAction;
-        InputAction unpauseAction;
-        GameStateManager gameStateManager; 
+        [SerializeField] IPlayerInput playerInput;
 
-        void Awake()
-        {
-            pauseAction = InputSystem.actions.FindAction("Pause");
-            unpauseAction = InputSystem.actions.FindAction("Unpause");
-        }
+        GameStateManager gameStateManager;
+
+        void Awake() => ServiceLocator.Global.Register(playerInput);
 
         void Update()
         {
-            if (pauseAction.WasPressedThisFrame())
+            ServiceLocator.For(this).Get(out playerInput);
+            if (playerInput.GetPause())
                 OpenMenu();
-            if (unpauseAction.WasPressedThisFrame())
+            if (playerInput.GetUnpause())
                 CloseMenu();
         }
 

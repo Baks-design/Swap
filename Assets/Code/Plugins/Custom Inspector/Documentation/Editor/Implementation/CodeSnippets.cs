@@ -194,6 +194,30 @@ namespace CustomInspector.Documentation
             }
         }
 
+        [SerializeField] ColorPaletteAttributeExamples colorPaletteAttributeExamples = new ColorPaletteAttributeExamples();
+
+        [System.Serializable]
+        class ColorPaletteAttributeExamples
+        {
+            [MessageBox("Click on the colors", MessageBoxType.Info)]
+
+            [ColorPalette]
+            public Color myImageColor1;
+
+            [ColorPalette(hideFoldout = true)]
+            public Color myImageColor2;
+
+            [HorizontalLine("")]
+
+            [ColorPalette("Alternative Scheme")]
+            public Color alternativeColor1;
+
+            [LabelSettings(LabelStyle.NoLabel),
+                ColorPalette("Alternative Scheme")]
+            public Color alternativeColor2;
+        }
+
+
         [SerializeField] CopyPasteAttributeExamples copyPasteAttributeExamples = new CopyPasteAttributeExamples();
 
         [System.Serializable]
@@ -321,7 +345,11 @@ namespace CustomInspector.Documentation
         [System.Serializable]
         class ForceFillAttributeExamples
         {
-            [ForceFill] public GameObject gob1;
+            [ForceFill]
+            public GameObject gob1;
+
+            [ForceFill(errorMessage = "No Animation without GameObject possible!!")]
+            public GameObject gob2;
 
             [ForceFill, SerializeField]
             string s2 = "Make this String Empty.";
@@ -336,7 +364,7 @@ namespace CustomInspector.Documentation
             [ForceFill("(0, 0, 0)"), SerializeField]
             Vector3 c = new Vector3(0, 0, 0);
 
-            [ForceFill(null)] public GameObject gob2;
+            [ForceFill(null)] public GameObject gob3;
 
             [ForceFill("-1"), SerializeField]
             float f = -1;
@@ -348,7 +376,7 @@ namespace CustomInspector.Documentation
             void Start()
             {
                 //this.CheckForceFilled();
-                gob2 = GameObject.FindAnyObjectByType<GameObject>();
+                gob1 = GameObject.FindObjectOfType<GameObject>();
             }
         }
 
@@ -379,32 +407,33 @@ namespace CustomInspector.Documentation
         [System.Serializable]
         class GetSetAttributeExamples
         {
-            [MessageBox("Shown as vector2, but in fact is vector3", MessageBoxType.Info)]
-            [GetSet(nameof(GetPosition), nameof(SetPosition))]
+            [MessageBox("Replace your property with a getter and a setter" +
+                        "\n(this Vector2 was a Vector3 before)", MessageBoxType.Info)]
 
-            [HideField] public Vector3 position;
+            [GetSet(nameof(FlattenVector), nameof(ExtendVector))]
+            public Vector3 v1;
 
-            Vector2 GetPosition()
-            {
-                return (Vector2)position;
-            }
-            void SetPosition(Vector2 v)
-            {
-                position = new(v.x, v.y, 5);
-            }
+            Vector2 FlattenVector(Vector3 v) => new Vector2(v.x, v.y);
+            Vector3 ExtendVector(Vector2 v) => new Vector3(v.x, v.y, 1);
 
             [HorizontalLine]
 
-            [MessageBox("You can't insert odd numbers", MessageBoxType.Info)]
-            [GetSet(nameof(GetEvenNumber), nameof(SetEvenNumber),
-                    label = "Only Even Numbers:", tooltip = "You can't insert odd numbers")]
+            [MessageBox("Add a field through a getter and a setter", MessageBoxType.Info)]
 
-            [HideField] public int evenNumber = 66;
+            [GetSet(nameof(GetTuple), nameof(SetTuple))]
+            public string myString = "Hello World!";
+            [ReadOnly] public float a;
+            [ReadOnly] public float b;
 
-            int GetEvenNumber()
-                => evenNumber;
-            void SetEvenNumber(int n)
-                => evenNumber = n - n % 2;
+            Vector2 GetTuple()
+            {
+                return new Vector2(a, b);
+            }
+            void SetTuple(Vector2 v)
+            {
+                a = v.x;
+                b = v.y;
+            }
         }
 
         [SerializeField] GUIColorAttributeExamples gUIColorAttributeExamples = new GUIColorAttributeExamples();
@@ -1517,21 +1546,23 @@ namespace CustomInspector.Documentation
         [System.Serializable]
         class ListContainerExamples
         {
-            [MessageBox("ShowIf is applied to the whole list." +
+            [MessageBox("New label and ShowIf and is applied to the whole list." +
                         "\nList is shown if 'visible' is ticked.", MessageBoxType.Info)]
 
             public bool visible = true;
 
-            [ShowIf(nameof(visible))]
+            [LabelSettings("New Label"),
+            ShowIf(nameof(visible))]
             [ListContainer]
             public ListContainer<int> myList;
 
             [HorizontalLine]
-            [MessageBox("MinAttribute is applied to all elements." +
+            [MessageBox("New labels and MinAttribute are applied to all elements." +
                         "\nAll elements of the list are positive.", MessageBoxType.Info)]
             [SerializeField, HideField] bool _;
 
-            [Min(0)]
+            [LabelSettings("New Label"),
+            Min(0)]
             public List<int> myPositiveNumbers
                 = new() { 1, 2, 3 };
 
@@ -1820,6 +1851,24 @@ namespace CustomInspector.Documentation
 
         //----------------------------------------------------Unitys------------------------------------------------
         [HorizontalLine("Unitys", 3)]
+
+        [SerializeField] ColorUsageAttributeExamples colorUsageAttributeExamples = new ColorUsageAttributeExamples();
+
+        [System.Serializable]
+        class ColorUsageAttributeExamples
+        {
+            [Title("Alpha")]
+            [ColorUsage(showAlpha: true)]
+            public Color c1 = Color.white;
+            [ColorUsage(showAlpha: false)]
+            public Color c2 = Color.red;
+
+            [Title("HDR")]
+            [ColorUsage(true, hdr: true)]
+            public Color c3 = Color.magenta;
+            [ColorUsage(true, hdr: false)]
+            public Color c4 = Color.cyan;
+        }
 
         [SerializeField] DelayedAttributeExamples delayedAttributeExamples = new DelayedAttributeExamples();
 

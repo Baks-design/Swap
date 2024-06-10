@@ -2,15 +2,13 @@
 {
     public readonly struct HealthChange
     {
-        public readonly float maxHealth;
-        public readonly float currentHealth;
-        public readonly float normalized;
+        public readonly int maxHealth;
+        public readonly int currentHealth;
 
-        public HealthChange(float maxHealth, float currentHealth) : this()
+        public HealthChange(int maxHealth, int currentHealth) : this()
         {
             this.currentHealth = currentHealth;
             this.maxHealth = maxHealth;
-            normalized = currentHealth / maxHealth;
         }
     }
 }

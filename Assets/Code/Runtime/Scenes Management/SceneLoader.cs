@@ -6,7 +6,7 @@ using Unity.Cinemachine;
 
 namespace SwapChains.Runtime.ScenesManagement
 {
-    public class SceneLoader : ValidatedMonoBehaviour
+    public class SceneLoader : MonoBehaviour
     {
         [SerializeField] float fillSpeed = 0.5f;
         [SerializeField, Child] Image loadingBar;
@@ -18,6 +18,8 @@ namespace SwapChains.Runtime.ScenesManagement
         public readonly SceneGroupManager manager = new();
 
         public SceneGroup[] SceneGroups => sceneGroups;
+
+        void OnValidate() => this.ValidateRefs();
 
         async void Start() => await LoadSceneGroup(0);
 

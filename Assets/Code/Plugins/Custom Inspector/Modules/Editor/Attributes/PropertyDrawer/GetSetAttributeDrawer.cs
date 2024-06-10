@@ -1,7 +1,9 @@
+using CustomInspector.Extensions;
+using CustomInspector.Helpers.Editor;
+using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using CustomInspector.Extensions;
-using System;
 
 namespace CustomInspector.Editor
 {
@@ -12,122 +14,209 @@ namespace CustomInspector.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             GetSetAttribute sm = (GetSetAttribute)attribute;
+            var info = cache.GetInfo(property, attribute, fieldInfo);
 
-            //Get getter
-            InvokableMethod getter;
-            try
+            if (!string.IsNullOrEmpty(info.ErrorMessage))
             {
-                getter = PropertyValues.GetMethodOnOwner(property, sm.getmethodPath);
-            }
-            catch (Exception e)
-            {
-                DrawProperties.DrawPropertyWithMessage(position, label, property, "get-method: " + e.Message, MessageType.Error);
-                return;
-            }
-            //check getters return type
-            if (getter.ReturnType == typeof(void))
-            {
-                string errorMessage = $"Get-Method {sm.getmethodPath} doesnt have a return value";
-                DrawProperties.DrawPropertyWithMessage(position, label, property, errorMessage, MessageType.Error);
-                return;
-            }
-            //get setter with getters return type
-            InvokableMethod setter;
-            try
-            {
-                setter = PropertyValues.GetMethodOnOwner(property, sm.setmethodPath, new Type[] { getter.ReturnType });
-            }
-            catch (Exception e)
-            {
-                DrawProperties.DrawPropertyWithMessage(position, label, property, "set-method: " + e.Message, MessageType.Error);
+                DrawProperties.DrawPropertyWithMessage(position, label, property, info.ErrorMessage, MessageType.Error);
                 return;
             }
 
-            //call getter
             object value;
-            property.serializedObject.ApplyModifiedPropertiesWithoutUndo();
             try
             {
-                value = getter.Invoke();
+                value = info.GetValue(property);
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
-                DrawProperties.DrawPropertyWithMessage(position, label, property, "error in get-function. See console for more information", MessageType.Error);
+                DrawProperties.DrawPropertyWithMessage(position, label, property, "Error in Get-Function! See console for more information.", MessageType.Error);
                 return;
             }
+
             //Draw Value
-            EditorGUI.BeginChangeCheck();
             Rect getRect = new(position)
             {
-                height = DrawProperties.GetPropertyHeight(PropertyConversions.ToPropertyType(getter.ReturnType), label),
+                height = DrawProperties.GetPropertyHeight(PropertyConversions.ToPropertyType(info.DisplayedType), label),
             };
-            GUIContent getSetLabel;
-            string tooltip = sm.tooltip;
-            if (sm.label is null)
-                getSetLabel = new(ShowMethodAttributeDrawer.TryGetNameOuttaGetter(getter.Name), tooltip);
-            else
-                getSetLabel = new(sm.label, tooltip);
 
-            var res = DrawProperties.DrawField(position: getRect, label: getSetLabel, value: value, getter.ReturnType);
+            EditorGUI.BeginChangeCheck();
+            object res = DrawProperties.DrawField(position: getRect, label: info.Label, value: value, info.DisplayedType);
             if (EditorGUI.EndChangeCheck())
             {
                 //call setter
                 try
                 {
-                    setter.Invoke(res);
+                    info.SetValue(property, res);
                 }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
                 }
-                property.serializedObject.ApplyModifiedFields(true);
             }
 
             //Draw Property below
-            Rect propRect = new(position)
+            if (!info.HideActualProperty)
             {
-                y = position.y + getRect.height + EditorGUIUtility.standardVerticalSpacing,
-                height = DrawProperties.GetPropertyHeight(label, property),
-            };
-            EditorGUI.BeginChangeCheck();
-            DrawProperties.PropertyField(propRect, label, property);
-            if (EditorGUI.EndChangeCheck())
-                property.serializedObject.ApplyModifiedProperties();
+                Rect propRect = new(position)
+                {
+                    y = position.y + getRect.height + EditorGUIUtility.standardVerticalSpacing,
+                    height = DrawProperties.GetPropertyHeight(label, property),
+                };
+                EditorGUI.BeginChangeCheck();
+                DrawProperties.PropertyField(propRect, label, property);
+                if (EditorGUI.EndChangeCheck())
+                    property.serializedObject.ApplyModifiedProperties();
+            }
         }
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            GetSetAttribute sm = (GetSetAttribute)attribute;
+            var info = cache.GetInfo(property, attribute, fieldInfo);
 
-            //Get getter
-            InvokableMethod getter;
+            //check for errors
+            if (!string.IsNullOrEmpty(info.ErrorMessage))
+                return DrawProperties.GetPropertyWithMessageHeight(label, property);
             try
             {
-                getter = PropertyValues.GetMethodOnOwner(property, sm.getmethodPath);
+                info.GetValue(property);
             }
             catch
             {
                 return DrawProperties.GetPropertyWithMessageHeight(label, property);
             }
 
-            //check getters return type
-            if (getter.ReturnType == typeof(void))
-                return DrawProperties.GetPropertyWithMessageHeight(label, property);
-
-            //get setter with getters return type
-            InvokableMethod setter;
-            try
+            //height
+            if (info.HideActualProperty)
             {
-                setter = PropertyValues.GetMethodOnOwner(property, sm.setmethodPath, new Type[] { getter.ReturnType });
+                return DrawProperties.GetPropertyHeight(PropertyConversions.ToPropertyType(info.DisplayedType), label);
             }
-            catch
+            else
             {
-                return DrawProperties.GetPropertyWithMessageHeight(label, property);
+                return DrawProperties.GetPropertyHeight(PropertyConversions.ToPropertyType(info.DisplayedType), label)
+                    + DrawProperties.GetPropertyHeight(label, property);
             }
+        }
 
-            //Draw
-            return DrawProperties.GetPropertyHeight(PropertyConversions.ToPropertyType(getter.ReturnType), label) + EditorGUIUtility.standardVerticalSpacing
-                        + DrawProperties.GetPropertyHeight(label, property);
+
+        static readonly PropInfoCache<PropInfo> cache = new();
+        class PropInfo : ICachedPropInfo
+        {
+
+            /// <summary>
+            /// If not null, all other propertys on PropInfo are invalid
+            /// </summary>
+            public string ErrorMessage { get; private set; }
+            /// <summary>
+            /// Getter Returntype and what type the new field will be
+            /// </summary>
+            public Type DisplayedType { get; private set; }
+            /// <summary>
+            /// The displayed value
+            /// </summary>
+            public Func<SerializedProperty, object> GetValue { get; private set; }
+            /// <summary>
+            /// What can be used, if diplayed value was changed
+            /// </summary>
+            public Action<SerializedProperty, object> SetValue { get; private set; }
+            /// <summary>
+            /// Label of displayed value
+            /// </summary>
+            public GUIContent Label { get; private set; }
+            /// <summary>
+            /// If the property is passed into the getter and set from return value of setter
+            /// </summary>
+            public bool PassedIntoGetter { get; private set; }
+            /// <summary>
+            /// If the property is passed into the getter and set from return value of setter
+            /// </summary>
+            public bool PassFromSetter;
+            /// <summary>
+            /// If ONLY the getter-setter-field should be visible and not the actual property under it
+            /// </summary>
+            public bool HideActualProperty { get; private set; }
+
+            public void Initialize(SerializedProperty property, PropertyAttribute attribute, FieldInfo fieldInfo)
+            {
+                GetSetAttribute gsa = (GetSetAttribute)attribute;
+
+                //without params
+                Type propertyType = fieldInfo.FieldType;
+
+                InvokableMethod getterInstance;
+                if (PropertyValues.TryGetMethodOnOwner(property, out getterInstance, gsa.getmethodPath))
+                {
+                    GetValue = (p) =>
+                    {
+                        p.serializedObject.ApplyModifiedPropertiesWithoutUndo();
+                        return PropertyValues.CallMethodOnOwner(p, gsa.getmethodPath);
+                    };
+                }
+                else
+                {
+                    Type[] propTypeArray = new Type[] { propertyType };
+
+                    if (PropertyValues.TryGetMethodOnOwner(property, out getterInstance, gsa.getmethodPath, propTypeArray))
+                    {
+                        GetValue = (p) =>
+                        {
+                            p.serializedObject.ApplyModifiedPropertiesWithoutUndo();
+                            return PropertyValues.CallMethodOnOwner(p, gsa.getmethodPath, propTypeArray, new object[] { p.GetValue() });
+                        };
+                    }
+                    else
+                    {
+                        ErrorMessage = $"{nameof(GetSetAttribute)}: No method '{gsa.getmethodPath}' found on {property.serializedObject.targetObject.GetType()}" +
+                                       $"\nwithout or with '{propertyType.Name}' as parameter";
+                        return;
+                    }
+                }
+
+                //check getters return type
+                if (getterInstance.ReturnType == typeof(void))
+                {
+                    ErrorMessage = $"Get-Method {gsa.getmethodPath} doesnt have a return value";
+                    return;
+                }
+                DisplayedType = getterInstance.ReturnType;
+
+                //get setter with getters return type
+                Type getterReturnType = getterInstance.ReturnType;
+                Type[] getterReturnTypeArray = new Type[] { getterReturnType };
+
+                if (PropertyValues.TryGetMethodOnOwner(property, out InvokableMethod setterInstance, gsa.setmethodPath, getterReturnTypeArray))
+                {
+                    if (getterInstance.ParameterCount() > 0
+                        && setterInstance.ReturnType == propertyType)
+                    {
+                        HideActualProperty = true;
+                        SetValue = (p, obj) =>
+                        {
+                            p.SetValue(PropertyValues.CallMethodOnOwner(p, gsa.setmethodPath, getterReturnTypeArray, new object[] { obj }));
+                            p.serializedObject.ApplyModifiedProperties();
+                        };
+                    }
+                    else
+                    {
+                        HideActualProperty = false;
+                        SetValue = (p, obj) =>
+                        {
+                            PropertyValues.CallMethodOnOwner(p, gsa.setmethodPath, getterReturnTypeArray, new object[] { obj });
+                            p.serializedObject.ApplyModifiedFields(true);
+                        };
+                    }
+                }
+                else
+                {
+                    ErrorMessage = $"{nameof(GetSetAttribute)}: No method '{gsa.setmethodPath}' found on {property.serializedObject.targetObject.GetType()}" +
+                                   $"\nwith '{getterReturnType.Name}' as parameter";
+                }
+
+                //set label
+                if (gsa.label is null)
+                    Label = new(ShowMethodAttributeDrawer.TryGetNameOuttaGetter(getterInstance.Name), gsa.tooltip);
+                else
+                    Label = new(gsa.label, gsa.tooltip);
+            }
         }
     }
 }

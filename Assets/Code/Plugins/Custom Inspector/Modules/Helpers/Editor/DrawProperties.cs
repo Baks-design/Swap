@@ -117,7 +117,7 @@ namespace CustomInspector.Extensions
                     case Color c:
                         return EditorGUI.ColorField(position, g, c);
                     case Enum e:
-                        return EditorGUI.EnumFlagsField(position, g, e);
+                        return EditorGUI.EnumPopup(position, g, e);
                     case Vector2Int v2i:
                         return EditorGUI.Vector2IntField(position, g, v2i);
                     case Vector2 v2:

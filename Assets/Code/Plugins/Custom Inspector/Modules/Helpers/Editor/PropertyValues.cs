@@ -277,6 +277,9 @@ namespace CustomInspector.Extensions
 
         public static GUIContent RepairLabel(GUIContent label, SerializedProperty property)
         {
+            if (label == null)
+                throw new ArgumentNullException("label is null");
+
             if (label.text == null) // even GUIContent.none has text = "" instead of null
                 label = new(PropertyConversions.NameFormat(property.name), property.tooltip);
             else
@@ -408,7 +411,19 @@ namespace CustomInspector.Extensions
         public static IEnumerable<SerializedProperty> GetAllVisibleProperties(this SerializedProperty property, bool alsoFromBases)
         => property.GetAllProperties(alsoFromBases).OnlyVisible();
 
-
+        public static bool HasMethodOnOwner(this SerializedProperty property, string methodPath,
+                                    Type[] parameterTypes = null, BindingFlags bindingAttr = defaultBindingFlags)
+        {
+            try
+            {
+                GetMethodOnOwner(property, methodPath, parameterTypes, bindingAttr);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         /// <exception cref="ArgumentException">invalid path</exception>
         /// <exception cref="MissingFieldException">A field name on the path is not found</exception>
         /// <exception cref="MissingMethodException">the method name on the end of the path was not found</exception>
@@ -418,15 +433,32 @@ namespace CustomInspector.Extensions
         {
             return InvokableMethod.GetMethod(DirtyValue.GetOwner(property), methodPath, parameterTypes, bindingAttr);
         }
+        public static bool TryGetMethodOnOwner(this SerializedProperty property, out InvokableMethod invokableMethod, string methodPath,
+                                    Type[] parameterTypes = null, BindingFlags bindingAttr = defaultBindingFlags)
+        {
+            try
+            {
+                invokableMethod = GetMethodOnOwner(property, methodPath, parameterTypes, bindingAttr);
+                return true;
+            }
+            catch
+            {
+                invokableMethod = null;
+                return false;
+            }
+        }
 
         /// <exception cref="ArgumentException">invalid path</exception>
         /// <exception cref="MissingFieldException">A field name on the path is not found</exception>
         /// <exception cref="MissingMethodException">the method name on the end of the path was not found</exception>
         /// <exception cref="Exceptions.WrongTypeException">If path has wrong format</exception>
         public static object CallMethodOnOwner(this SerializedProperty property, string methodPath,
-                                    object[] parameters = null, BindingFlags bindingFlags = defaultBindingFlags)
+                                    Type[] parameterTypes = null, object[] parameters = null, BindingFlags bindingFlags = defaultBindingFlags)
         {
-            var method = InvokableMethod.GetMethod(DirtyValue.GetOwner(property), methodPath, parameters?.Select(_ => _.GetType()).ToArray(), bindingFlags);
+            if (parameterTypes != null || parameters != null) //parameterTypes are important, because parameters can be null, and then no type can be retrieved
+                Debug.Assert(parameterTypes.Length == parameters.Length, "ParameterTypes have to be the types of the parameters");
+
+            var method = InvokableMethod.GetMethod(DirtyValue.GetOwner(property), methodPath, parameterTypes, bindingFlags);
             return method.Invoke(parameters: parameters);
         }
         /// <exception cref="ArgumentException">invalid path</exception>

@@ -128,21 +128,22 @@ Material:
     - _LineBottom: 0.05
     - _LineSphereDist: -0.2
     - _LineTop: 0.05
-    - _LineWidth: 0.045
+    - _LineWidth: 0.1
     - _MaskStrength: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Offset: 0
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
-    - _Radius: 0.45
+    - _Radius: 0.39
     - _ReceiveShadows: 1
     - _RemoveSegments: 0
     - _Rotation: 0
     - _Scale: 0.5
     - _ScaleSparkle: 0.2
-    - _SegmentCount: 5
-    - _SegmentSpacing: 0.02
+    - _SegmentCount: 3
+    - _SegmentSpacing: 0.05
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SparkleOver: 0.2
@@ -163,7 +164,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.20392147, g: 1, b: 0, a: 1}
+    - _BaseColor: {r: 0.20392144, g: 1, b: 0, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}

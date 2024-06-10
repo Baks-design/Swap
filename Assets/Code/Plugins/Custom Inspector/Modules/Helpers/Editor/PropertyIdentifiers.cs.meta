@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 01098d563a06d5b4d99ba74787ba173f
+guid: 0d72a6149010d6f4d8a3ad65c56781d8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -13,6 +13,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 241058
   packageName: Custom Inspector
-  packageVersion: 3.4.1
-  assetPath: Assets/Code/Plugins/Editor/Custom Inspector/Modules/Helpers/Editor/PropertyIdentifiers.cs
-  uploadId: 667389
+  packageVersion: 3.4.4
+  assetPath: Assets/Code/Plugins/Custom Inspector/Modules/Helpers/Editor/PropertyIdentifiers.cs
+  uploadId: 669659
